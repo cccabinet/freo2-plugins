@@ -3,7 +3,7 @@
 $text_home_index = $GLOBALS['setting']['text_home_index'];
 
 // 指定があれば処理を行なう
-if (preg_match_all('/\<\w+\:\w+\=\w+\>/', $text_home_index, $matches) !== false) {
+if ($text_home_index && preg_match_all('/\<\w+\:\w+\=\w+\>/', $text_home_index, $matches) !== false) {
     $marks = $matches[0];
 
     // それぞれの指定内容を確認する
