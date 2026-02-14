@@ -26,21 +26,25 @@ foreach ($entries as $entry) {
 }
 
 // フィールドセットを削除
-$resource = db_delete([
-    'delete_from' => DATABASE_PREFIX . 'field_sets',
-    'where'       => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
-]);
-if (!$resource) {
-    error('プラグイン用SQL [フィールドセットを削除] を実行できません。');
+if (!empty($ids)) {
+    $resource = db_delete([
+        'delete_from' => DATABASE_PREFIX . 'field_sets',
+        'where'       => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
+    ]);
+    if (!$resource) {
+        error('プラグイン用SQL [フィールドセットを削除] を実行できません。');
+    }
 }
 
 // カテゴリーセットを削除
-$resource = db_delete([
-    'delete_from' => DATABASE_PREFIX . 'category_sets',
-    'where'       => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
-]);
-if (!$resource) {
-    error('プラグイン用SQL [カテゴリーセットを削除] を実行できません。');
+if (!empty($ids)) {
+    $resource = db_delete([
+        'delete_from' => DATABASE_PREFIX . 'category_sets',
+        'where'       => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
+    ]);
+    if (!$resource) {
+        error('プラグイン用SQL [カテゴリーセットを削除] を実行できません。');
+    }
 }
 
 // エントリーを削除
