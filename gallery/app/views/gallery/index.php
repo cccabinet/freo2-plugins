@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="plugin-gallery">
-        <h2 class="h3 mb-3">Gallery</h2>
+        <h2 class="h3 mt-4 mb-3">Gallery</h2>
         <?php e($GLOBALS['plugin']['gallery']['setting']['text_index']) ?>
         <?php foreach ($_view['categories'] as $category) : ?>
         <?php if (isset($category['name'])) : ?><h3 class="h4 mb-4"><?php h($category['name']) ?></h3><?php endif ?>

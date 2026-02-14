@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="gallery-<?php h($_view['entry']['code']) ?>">
-        <h2 class="h3 mb-3"><?php h($_view['entry']['title']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($_view['entry']['title']) ?></h2>
         <?php e($GLOBALS['plugin']['gallery']['setting']['text_detail']) ?>
 
         <?php if (!empty($_view['entry']['category_sets'])) : ?>
