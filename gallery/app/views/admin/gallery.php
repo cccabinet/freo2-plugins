@@ -50,6 +50,7 @@
                                 <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                 <th class="text-nowrap">タイトル</th>
                                 <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                <th class="text-nowrap d-none d-md-table-cell">並び順</th>
                                 <?php if ($GLOBALS['plugin']['gallery']['setting']['use_approve']) : ?>
                                 <th class="text-nowrap">承認</th>
                                 <?php endif ?>
@@ -66,6 +67,7 @@
                                 <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                 <th class="text-nowrap">タイトル</th>
                                 <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                <th class="text-nowrap d-none d-md-table-cell">並び順</th>
                                 <?php if ($GLOBALS['plugin']['gallery']['setting']['use_approve']) : ?>
                                 <th class="text-nowrap">承認</th>
                                 <?php endif ?>
@@ -83,6 +85,7 @@
                                 <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($entry['code'], 50)) ?></code></td>
                                 <td><?php h(truncate($entry['title'], 50)) ?></td>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
+                                <td class="d-none d-md-table-cell"><?php h(empty($entry['sort']) ? '' : $entry['sort']) ?></td>
                                 <?php if ($GLOBALS['plugin']['gallery']['setting']['use_approve']) : ?>
                                 <td class="text-nowrap"><span class="badge <?php t(app_badge('approved', $entry['approved'])) ?>"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
                                 <?php endif ?>

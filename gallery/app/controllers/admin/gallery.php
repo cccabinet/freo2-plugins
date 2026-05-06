@@ -3,7 +3,7 @@
 // エントリーを取得
 $_view['entries'] = model('select_entries', [
     'where'    => 'types.code = ' . db_escape('gallery'),
-    'order_by' => 'entries.code, entries.id',
+    'order_by' => 'entries.sort DESC, entries.code, entries.id',
 ], [
     'associate' => true,
 ]);

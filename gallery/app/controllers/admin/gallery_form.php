@@ -27,12 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'title'          => isset($_POST['title'])          ? $_POST['title']          : '',
             'text'           => isset($_POST['text'])           ? $_POST['text']           : '',
             'comment'        => isset($_POST['comment'])        ? $_POST['comment']        : '',
+            'sort'           => isset($_POST['sort'])           ? $_POST['sort']           : '',
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
             'category_sets'  => isset($_POST['category_sets'])  ? $_POST['category_sets']  : [],
             'attribute_sets' => isset($_POST['attribute_sets']) ? $_POST['attribute_sets'] : [],
             'picture_files'  => isset($_POST['picture_files'])  ? $_POST['picture_files']  : [],
         ]),
     ];
+    $post['entry']['sort'] = empty($post['entry']['sort']) ? 0 : $post['entry']['sort'];
 
     if (isset($_POST['view']) && $_POST['view'] === 'preview') {
         // プレビュー
@@ -79,6 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             warning('編集データが見つかりません。');
         } else {
             $_view['entry'] = $entries[0];
+
+            $_view['entry']['sort'] = empty($_view['entry']['sort']) ? '' : $_view['entry']['sort'];
         }
     }
 

@@ -4,7 +4,7 @@ import('app/services/entry.php');
 
 // エントリーを取得
 $entries = service_entry_select_published('gallery', [
-    'order_by' => 'entries.code',
+    'order_by' => 'entries.sort DESC, entries.code, entries.id',
 ]);
 $_view['entry_sets'] = [];
 foreach ($entries as $entry) {

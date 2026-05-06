@@ -59,6 +59,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
             'comment'      => $_SESSION['post']['entry']['comment'],
+            'sort'         => $_SESSION['post']['entry']['sort'],
         ],
     ], [
         'field_sets'     => $_SESSION['post']['entry']['field_sets'],
@@ -84,6 +85,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
             'comment'      => $_SESSION['post']['entry']['comment'],
+            'sort'         => $_SESSION['post']['entry']['sort'],
         ],
         'where' => [
             'id = :id',

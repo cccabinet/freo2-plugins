@@ -144,6 +144,10 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
+                            <div class="form-group mb-2">
+                                <label class="fw-bold">並び順 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="一覧では数値の大きいものから順に表示されます。">？</span></label>
+                                <input type="text" name="sort" size="30" value="<?php t($_view['entry']['sort']) ?>" class="form-control" style="width: 200px;">
+                            </div>
                             <div class="form-group mt-4">
                                 <button type="button" class="btn btn-primary px-4 preview">確認</button>
                                 <button type="submit" class="btn btn-primary px-4">登録</button>
