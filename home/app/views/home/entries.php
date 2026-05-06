@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php if (!empty($_view['home_entries'])) : ?>
 <div id="entry">
     <h2 class="h3 mb-3">エントリー</h2>
