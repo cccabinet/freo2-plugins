@@ -9,10 +9,16 @@ $insert_value = [
     'icon'   => '#symbol-list-ul',
     'show'   => true,
 ];
-$insert_position = array_search('page', array_keys($GLOBALS['menu_contents']['admin']['contents']));
 
 // メニューを挿入
-array_splice($GLOBALS['menu_contents']['admin']['contents'], $insert_position + 1, 0, [$insert_key => $insert_value]);
+$menu_contents = [];
+foreach ($GLOBALS['menu_contents']['admin']['contents'] as $key => $value) {
+    if ($key === 'menu') {
+        $menu_contents[$insert_key] = $insert_value;
+    }
+    $menu_contents[$key] = $value;
+}
+$GLOBALS['menu_contents']['admin']['contents'] = $menu_contents;
 
 // 権限を確認
 if (!empty($_SESSION['auth']['user']['id'])) {
