@@ -42,8 +42,8 @@ $GLOBALS['plugin']['rewrite']['option'] = app_config('APP_OPTION', [
         ],
         // タイプ
         'type' => [
-            'rewrite'  => 'リライト',
-            'redirect' => 'リダイレクト',
+            'view'     => '表示',
+            'redirect' => '転送',
         ],
     ],
 ]);

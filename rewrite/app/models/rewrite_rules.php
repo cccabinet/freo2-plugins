@@ -212,7 +212,7 @@ function validate_rewrite_rules($queries, $options = [])
             $messages['url'] = 'リライト前が入力されていません。';
         } elseif (!validator_max_length($queries['url'], 200)) {
             $messages['url'] = 'リライト前は200文字以内で入力してください。';
-        } elseif (!validator_regexp($queries['url'], '^\/[\w\-\/]+$')) {
+        } elseif (!validator_regexp($queries['url'], '^\/[\w\-\/]*$')) {
             $messages['url'] = 'リライト前はスラッシュから始まる半角英数字で入力してください。';
         }
     }
@@ -223,7 +223,7 @@ function validate_rewrite_rules($queries, $options = [])
             $messages['rewrited'] = 'リライト後が入力されていません。';
         } elseif (!validator_max_length($queries['rewrited'], 200)) {
             $messages['rewrited'] = 'リライト後は200文字以内で入力してください。';
-        } elseif (!validator_regexp($queries['rewrited'], '^\/[\w\-\/]+$')) {
+        } elseif (!validator_regexp($queries['rewrited'], '^\/[\w\-\/]*$')) {
             $messages['rewrited'] = 'リライト後はスラッシュから始まる半角英数字で入力してください。';
         }
     }
