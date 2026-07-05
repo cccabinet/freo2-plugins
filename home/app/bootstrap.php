@@ -41,10 +41,7 @@ if ($text_home_index && preg_match_all('/\<\w+\:\w+\=\w+\>/', $text_home_index, 
             }
 
             // 記事をビューに割り当てて結果を取得する
-            ob_start();
-            include($GLOBALS['config']['plugin_path'] . $GLOBALS['plugin']['home']['code'] . '/app/views/home/' . $type . '.php');
-            $contents = ob_get_contents();
-            ob_end_clean();
+            $contents = view('../../plugins/home/app/views/home/' . $type . '.php', true);
 
             // 指定箇所に結果を挿入する
             $text_home_index = preg_replace('/\<' . $type . '\:' . $option . '\=' . $value . '\>/', $contents, $text_home_index);
