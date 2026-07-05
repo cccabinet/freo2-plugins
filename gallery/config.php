@@ -77,7 +77,7 @@ $GLOBALS['plugin']['gallery']['setting_define'] = [
         'required'    => false,
     ],
     'text_detail' => [
-        'name'        => '文言 ギャラリー 詳細',
+        'name'        => '文言 ギャラリー詳細',
         'explanation' => null,
         'type'        => 'textarea',
         'required'    => false,

@@ -3,21 +3,17 @@
 // モデルを読み込み
 import('plugins/rewrite/app/models/rewrite_rules.php');
 
-// メニューを定義
-$insert_key = 'rewrite';
-$insert_value = [
-    'name'   => 'リライト管理',
-    'link'   => '/admin/rewrite',
-    'active' => '/^rewrite(_|$)/',
-    'icon'   => '#symbol-list-ul',
-    'show'   => true,
-];
-
-// メニューを挿入
+// メニューを追加
 $menu_contents = [];
 foreach ($GLOBALS['menu_contents']['admin']['contents'] as $key => $value) {
     if ($key === 'widget') {
-        $menu_contents[$insert_key] = $insert_value;
+        $menu_contents['rewrite'] = [
+            'name'   => 'リライト管理',
+            'link'   => '/admin/rewrite',
+            'active' => '/^rewrite(_|$)/',
+            'icon'   => '#symbol-list-ul',
+            'show'   => true,
+        ];
     }
     $menu_contents[$key] = $value;
 }
