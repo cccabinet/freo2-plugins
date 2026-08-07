@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'code'           => isset($_POST['code'])           ? $_POST['code']           : '',
             'title'          => isset($_POST['title'])          ? $_POST['title']          : '',
             'text'           => isset($_POST['text'])           ? $_POST['text']           : '',
+            'text_type'      => isset($_POST['text_type'])      ? $_POST['text_type']      : '',
             'comment'        => isset($_POST['comment'])        ? $_POST['comment']        : '',
             'sort'           => isset($_POST['sort'])           ? $_POST['sort']           : '',
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
@@ -65,7 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 初期データを取得
     if (empty($_GET['id'])) {
         $_view['entry'] = model('default_entries');
-        $_view['entry']['code'] = $GLOBALS['plugin']['gallery']['setting']['default_code'] ? localdate($GLOBALS['plugin']['gallery']['setting']['default_code']) : '';
+
+        $_view['entry']['code']      = $GLOBALS['plugin']['gallery']['setting']['default_code'] ? localdate($GLOBALS['plugin']['gallery']['setting']['default_code']) : '';
+        $_view['entry']['text_type'] = $GLOBALS['plugin']['gallery']['setting']['text_type'];
     } else {
         $entries = model('select_entries', [
             'where' => [
