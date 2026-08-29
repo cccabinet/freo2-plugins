@@ -135,7 +135,7 @@ function delete_rewrite_rules($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'rewrite_rules AS rewrite_rules',
+            'delete_from' => DATABASE_PREFIX . 'rewrite_rules',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);
