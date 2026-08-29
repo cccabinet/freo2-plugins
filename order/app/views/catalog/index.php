@@ -1,0 +1,34 @@
+<?php import('app/views/header.php') ?>
+
+    <div id="plugin-catalog">
+        <h2 class="h3 mt-4 mb-3">Catalog</h2>
+        <p><a href="<?php t(MAIN_FILE) ?>/cart/" class="btn btn-primary"><?php h($GLOBALS['plugin']['order']['setting']['button_cart']) ?></a></p>
+        <?php e($GLOBALS['plugin']['order']['setting']['text_index']) ?>
+        <?php foreach ($_view['categories'] as $category) : ?>
+        <?php if (isset($category['name'])) : ?><h3 class="h4 mb-4"><?php h($category['name']) ?></h3><?php endif ?>
+        <?php if (!empty($_view['entry_sets'][$category['id']])) : ?>
+        <div class="row">
+            <?php foreach ($_view['entry_sets'][$category['id']] as $entry) : ?>
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <a href="<?php t(MAIN_FILE) ?>/catalog/detail/<?php h($entry['code']) ?>">
+                        <?php if (!empty($entry['thumbnail'])) : ?>
+                        <img class="card-img-top" src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="<?php h($entry['title']) ?>">
+                        <?php endif ?>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text"><a href="<?php t(MAIN_FILE) ?>/catalog/detail/<?php h($entry['code']) ?>"><?php h($entry['title']) ?></a></p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach ?>
+        </div>
+        <?php elseif (isset($category['name'])) : ?>
+        <div class="row">
+            <p>登録されていません。</p>
+        </div>
+        <?php endif ?>
+        <?php endforeach ?>
+    </div>
+
+<?php import('app/views/footer.php') ?>
