@@ -101,10 +101,10 @@
 
                 <?php
                 $shipping_status_badges = [
-                    'preparing' => 'text-dark bg-warning',
-                    'completed' => 'text-light bg-success',
-                    'failed'    => 'text-light bg-danger',
-                    'returned'  => 'text-light bg-secondary',
+                    'preparing' => 'text-bg-warning',
+                    'completed' => 'text-bg-success',
+                    'failed'    => 'text-bg-danger',
+                    'returned'  => 'text-bg-secondary',
                 ];
                 ?>
                 <table class="table table-bordered">
@@ -132,7 +132,7 @@
                             <td class="text-nowrap"><?php h($order_shipping['shipping_date']) ?></td>
                             <td class="d-none d-md-table-cell"><?php h($_view['order_delivery_sets'][$order_shipping['delivery_id']]['name'] ?? '') ?></td>
                             <td class="text-end"><?php if ($order_shipping['delivery_cost'] !== null) : ?><?php h(number_format($order_shipping['delivery_cost'])) ?>円<?php endif ?></td>
-                            <td class="text-nowrap"><span class="badge <?php t($shipping_status_badges[$order_shipping['status']] ?? 'text-light bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_shippings']['status'][$order_shipping['status']] ?? $order_shipping['status']) ?></span></td>
+                            <td class="text-nowrap"><span class="badge <?php t($shipping_status_badges[$order_shipping['status']] ?? 'text-bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_shippings']['status'][$order_shipping['status']] ?? $order_shipping['status']) ?></span></td>
                             <td><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>&amp;id=<?php t($order_shipping['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>

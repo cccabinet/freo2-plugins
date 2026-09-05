@@ -40,7 +40,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">在庫 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">在庫 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="stock_id" class="form-select">
                                     <option value=""></option>
                                     <?php foreach ($_view['stocks'] as $stock) : ?>
@@ -49,11 +49,11 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">数 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="購入時に在庫を減らす数。">？</span> <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">数 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="購入時に在庫を減らす数。">？</span> <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="quantity" size="30" value="<?php t($_view['order_product']['quantity']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_product']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

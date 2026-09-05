@@ -67,7 +67,7 @@
                             </div>
                             <?php endif ?>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">公開 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">公開 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="public" class="form-select" style="width: 200px;">
                                     <?php foreach ($GLOBALS['config']['option']['entry']['public'] as $key => $value) : ?>
                                     <option value="<?php t($key) ?>"<?php $key == $_view['entry']['public'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
@@ -97,15 +97,15 @@
                             </div>
                             <?php endif ?>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">日時 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">日時 <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">コード <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="商品のURLに使用されます。">？</span> <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">コード <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="商品のURLに使用されます。">？</span> <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="code" size="30" value="<?php t($_view['entry']['code']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">タイトル <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="title" size="30" value="<?php t($_view['entry']['title']) ?>" class="form-control">
                             </div>
                             <?php if ($_view['entry']['text_type'] !== 'none') : ?>
@@ -118,7 +118,7 @@
                             <input type="hidden" name="text_type" value="<?php t($_view['entry']['text_type']) ?>">
                             <?php else : ?>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">本文形式 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">本文形式 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="text_type" class="form-select" style="width: 200px;">
                                     <?php foreach ($GLOBALS['config']['option']['entry']['text_type'] as $key => $value) : ?>
                                     <option value="<?php t($key) ?>"<?php $key == $_view['entry']['text_type'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
@@ -151,7 +151,7 @@
                             <?php endif ?>
                             <?php import('app/views/admin/field_set.php') ?>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">コメントの受付 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">コメントの受付 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="comment" class="form-select" style="width: 200px;">
                                     <?php foreach ($GLOBALS['config']['option']['entry']['comment'] as $key => $value) : ?>
                                     <option value="<?php t($key) ?>"<?php $key == $_view['entry']['comment'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
@@ -159,7 +159,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">並び順 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="一覧では数値の大きいものから順に表示されます。">？</span></label>
+                                <label class="fw-bold">並び順 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="一覧では数値の大きいものから順に表示されます。">？</span></label>
                                 <input type="text" name="sort" size="30" value="<?php t($_view['entry']['sort']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mt-4">

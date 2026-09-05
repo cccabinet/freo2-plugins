@@ -46,16 +46,16 @@
 
                 <?php
                 $status_badges = [
-                    'order'     => 'text-dark bg-info',
-                    'pending'   => 'text-dark bg-warning',
-                    'paid'      => 'text-dark bg-warning',
-                    'shipping'  => 'text-dark bg-warning',
-                    'shipped'   => 'text-light bg-success',
-                    'provided'  => 'text-light bg-success',
-                    'completed' => 'text-light bg-success',
-                    'returned'  => 'text-light bg-danger',
-                    'cancelled' => 'text-light bg-secondary',
-                    'hold'      => 'text-dark bg-warning',
+                    'order'     => 'text-bg-info',
+                    'pending'   => 'text-bg-warning',
+                    'paid'      => 'text-bg-warning',
+                    'shipping'  => 'text-bg-warning',
+                    'shipped'   => 'text-bg-success',
+                    'provided'  => 'text-bg-success',
+                    'completed' => 'text-bg-success',
+                    'returned'  => 'text-bg-danger',
+                    'cancelled' => 'text-bg-secondary',
+                    'hold'      => 'text-bg-warning',
                 ];
                 ?>
                 <table class="table table-bordered">
@@ -103,7 +103,7 @@
                             <td class="d-none d-md-table-cell"><?php h($GLOBALS['plugin']['order']['option']['order_spec']['provide'][$order_record['provide']] ?? $order_record['provide']) ?></td>
                             <td class="d-none d-md-table-cell"><?php h($_view['order_payment_sets'][$order_record['payment_id']]['name'] ?? '') ?></td>
                             <td class="text-end d-none d-md-table-cell"><?php h(number_format($total)) ?>円</td>
-                            <td class="text-nowrap"><span class="badge <?php t($status_badges[$order_record['status']] ?? 'text-light bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_record']['status'][$order_record['status']] ?? $order_record['status']) ?></span></td>
+                            <td class="text-nowrap"><span class="badge <?php t($status_badges[$order_record['status']] ?? 'text-bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_record']['status'][$order_record['status']] ?? $order_record['status']) ?></span></td>
                             <td>
                                 <?php if ($GLOBALS['plugin']['order']['setting']['use_shipping'] && $order_record['provide'] === 'delivery') : ?>
                                 <a href="<?php t(MAIN_FILE) ?>/admin/shipping?record_id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap">発送</a>

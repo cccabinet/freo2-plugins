@@ -37,19 +37,19 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">在庫管理コード <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="在庫最小単位の管理コード。">？</span> <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">在庫管理コード <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="在庫最小単位の管理コード。">？</span> <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="code" size="30" value="<?php t($_view['order_stock']['code']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">名前 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">名前 <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="name" size="30" value="<?php t($_view['order_stock']['name']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">内容 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="色やサイズなど在庫を区別できる内容を入力。">？</span></label>
+                                <label class="fw-bold">内容 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="色やサイズなど在庫を区別できる内容を入力。">？</span></label>
                                 <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['order_stock']['text']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">種類 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">種類 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="kind" class="form-select" style="width: 200px;">
                                     <option value=""></option>
                                     <?php foreach ($GLOBALS['plugin']['order']['option']['order_stock']['kind'] as $key => $value) : ?>
@@ -58,11 +58,11 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2 for-digital">
-                                <label class="fw-bold">ダウンロード案内 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="デジタルコンテンツのダウンロード方法。">？</span></label>
+                                <label class="fw-bold">ダウンロード案内 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="デジタルコンテンツのダウンロード方法。">？</span></label>
                                 <textarea name="download" rows="10" cols="50" class="form-control"><?php t($_view['order_stock']['download']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">数 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="在庫の数。在庫数を管理しない場合は空欄にする。">？</span></label>
+                                <label class="fw-bold">数 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="在庫の数。在庫数を管理しない場合は空欄にする。">？</span></label>
                                 <input type="text" name="quantity" size="30" value="<?php t($_view['order_stock']['quantity']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
@@ -70,7 +70,7 @@
                                 <input type="text" name="cost_price" size="30" value="<?php t($_view['order_stock']['cost_price']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">メモ <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_stock']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

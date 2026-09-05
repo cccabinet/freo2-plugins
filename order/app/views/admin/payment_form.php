@@ -37,19 +37,19 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">名前 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">名前 <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="name" size="30" value="<?php t($_view['order_payment']['name']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">内容 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="支払方法の説明。">？</span></label>
+                                <label class="fw-bold">内容 <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="支払方法の説明。">？</span></label>
                                 <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['order_payment']['text']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">手数料 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">手数料 <span class="badge text-bg-danger">必須</span></label>
                                 <input type="text" name="fee" size="30" value="<?php t($_view['order_payment']['fee']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">有効 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">有効 <span class="badge text-bg-danger">必須</span></label>
                                 <select name="enabled" class="form-select" style="width: 200px;">
                                     <?php foreach ($GLOBALS['plugin']['order']['option']['order_payment']['enabled'] as $key => $value) : ?>
                                     <option value="<?php t($key) ?>"<?php $key == $_view['order_payment']['enabled'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
@@ -57,7 +57,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_payment']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

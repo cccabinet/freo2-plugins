@@ -23,11 +23,11 @@
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="id" value="<?php t($_view['order_address']['id']) ?>">
                     <div class="form-group mb-2">
-                        <label class="fw-bold">名前 姓 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">名前 姓 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="name_01" value="<?php t($_view['order_address']['name_01']) ?>" class="form-control">
                     </div>
                     <div class="form-group mb-2">
-                        <label class="fw-bold">名前 名 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">名前 名 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="name_02" value="<?php t($_view['order_address']['name_02']) ?>" class="form-control">
                     </div>
                     <div class="form-group mb-2">
@@ -39,15 +39,15 @@
                         <input type="text" name="kana_02" value="<?php t($_view['order_address']['kana_02']) ?>" class="form-control">
                     </div>
                     <div class="form-group mb-2">
-                        <label class="fw-bold">郵便番号 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">郵便番号 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="zipcode" value="<?php t($_view['order_address']['zipcode']) ?>" class="form-control" style="width: 200px;">
                     </div>
                     <div class="form-group mb-2">
-                        <label class="fw-bold">都道府県 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">都道府県 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="prefecture" value="<?php t($_view['order_address']['prefecture']) ?>" class="form-control" style="width: 200px;">
                     </div>
                     <div class="form-group mb-2">
-                        <label class="fw-bold">住所 1 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">住所 1 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="address_01" value="<?php t($_view['order_address']['address_01']) ?>" class="form-control">
                     </div>
                     <div class="form-group mb-2">
@@ -55,7 +55,7 @@
                         <input type="text" name="address_02" value="<?php t($_view['order_address']['address_02']) ?>" class="form-control">
                     </div>
                     <div class="form-group mb-2">
-                        <label class="fw-bold">電話番号 <span class="badge bg-danger">必須</span></label>
+                        <label class="fw-bold">電話番号 <span class="badge text-bg-danger">必須</span></label>
                         <input type="text" name="telephone" value="<?php t($_view['order_address']['telephone']) ?>" class="form-control" style="width: 200px;">
                     </div>
                     <div class="form-group mt-4">
