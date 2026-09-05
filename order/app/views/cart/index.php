@@ -64,9 +64,9 @@
             </tbody>
         </table>
         <?php if (!empty($_SESSION['cart']['delivery']) && !empty($_SESSION['cart']['download'])) : ?>
-        <p><a href="<?php t(MAIN_FILE) ?>/order/?provide=<?php t($provide_key) ?>" class="btn btn-primary"><?php h($GLOBALS['plugin']['order']['setting']['button_cart_order']) ?></a></p>
+        <p><a href="<?php t(MAIN_FILE) ?>/order/?provide=<?php t($provide_key) ?>" class="btn btn-primary" role="button"><?php h($GLOBALS['plugin']['order']['setting']['button_cart_order']) ?></a></p>
         <?php else : ?>
-        <p><a href="<?php t(MAIN_FILE) ?>/order/" class="btn btn-primary"><?php h($GLOBALS['plugin']['order']['setting']['button_cart_order']) ?></a></p>
+        <p><a href="<?php t(MAIN_FILE) ?>/order/" class="btn btn-primary" role="button"><?php h($GLOBALS['plugin']['order']['setting']['button_cart_order']) ?></a></p>
         <?php endif ?>
         <?php endif ?>
         <?php endforeach ?>

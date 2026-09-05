@@ -2,7 +2,7 @@
 
     <div id="plugin-catalog">
         <h2 class="h3 mt-4 mb-3">Catalog</h2>
-        <p><a href="<?php t(MAIN_FILE) ?>/cart/" class="btn btn-primary"><?php h($GLOBALS['plugin']['order']['setting']['button_cart']) ?></a></p>
+        <p><a href="<?php t(MAIN_FILE) ?>/cart/" class="btn btn-primary" role="button"><?php h($GLOBALS['plugin']['order']['setting']['button_cart']) ?></a></p>
         <?php e($GLOBALS['plugin']['order']['setting']['text_index']) ?>
         <?php foreach ($_view['categories'] as $category) : ?>
         <?php if (isset($category['name'])) : ?><h3 class="h4 mb-4"><?php h($category['name']) ?></h3><?php endif ?>

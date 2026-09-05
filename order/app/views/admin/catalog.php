@@ -19,9 +19,9 @@
             <div class="card-body">
                 <p>商品を管理します。</p>
                 <p>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form" class="btn btn-primary">商品登録</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form" class="btn btn-primary" role="button">商品登録</a>
                     <?php if ($GLOBALS['plugin']['order']['setting']['use_stock']) : ?>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/stock" class="btn btn-primary">在庫管理</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/stock" class="btn btn-primary" role="button">在庫管理</a>
                     <?php endif ?>
                 </p>
                 <?php if (isset($_GET['ok'])) : ?>
@@ -110,8 +110,8 @@
                                 </td>
                                 <?php endif ?>
                                 <td>
-                                    <a href="<?php t(MAIN_FILE) ?>/admin/spec?entry_id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap">規格</a>
-                                    <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap">編集</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/spec?entry_id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">規格</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap" role="button">編集</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>

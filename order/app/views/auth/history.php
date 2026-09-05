@@ -54,7 +54,7 @@
                             <td class="d-none d-md-table-cell"><?php h($_view['order_delivery_sets'][$order_record['delivery_id']]['name'] ?? '') ?></td>
                             <td class="text-end"><?php h(number_format($total)) ?>円</td>
                             <td class="text-nowrap"><span class="badge <?php t($status_badges[$order_record['status']] ?? 'text-bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_record']['status'][$order_record['status']] ?? $order_record['status']) ?></span></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/auth/history_view?id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/auth/history_view?id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">表示</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

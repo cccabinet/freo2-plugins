@@ -62,7 +62,7 @@
                 <dd class="col-sm-9"><?php h($_view['order_record']['message']) ?></dd>
             </dl>
             <div class="form-group mt-4">
-                <a href="<?php t(MAIN_FILE) ?>/order/?referer=preview" class="btn btn-secondary px-4">修正</a>
+                <a href="<?php t(MAIN_FILE) ?>/order/?referer=preview" class="btn btn-secondary px-4" role="button">修正</a>
                 <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['plugin']['order']['setting']['button_order']) ?></button>
             </div>
         </form>

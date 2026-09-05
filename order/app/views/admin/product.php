@@ -20,7 +20,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>規格に属する製品を管理します。「購入を完了した際に在庫数を減らす」設定として使用します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/product_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($_GET['spec_id']) ?>" class="btn btn-primary">製品登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/product_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($_GET['spec_id']) ?>" class="btn btn-primary" role="button">製品登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -77,7 +77,7 @@
                                 <td><?php h($order_product['order_stock_name']) ?></td>
                                 <td><?php h($order_product['quantity']) ?></td>
                                 <td class="d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
-                                <td><a href="<?php t(MAIN_FILE) ?>/admin/product_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($_GET['spec_id']) ?>&amp;id=<?php t($order_product['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
+                                <td><a href="<?php t(MAIN_FILE) ?>/admin/product_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($_GET['spec_id']) ?>&amp;id=<?php t($order_product['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

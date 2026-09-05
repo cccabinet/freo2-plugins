@@ -18,7 +18,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>URLを操作するためのルールを管理します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/rewrite_form" class="btn btn-primary">ルール登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/rewrite_form" class="btn btn-primary" role="button">ルール登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -67,7 +67,7 @@
                                 <td class="text-nowrap d-none d-md-table-cell"><span class="badge <?php t(app_badge('kind', $rewrite_rule['type'])) ?>"><?php h($GLOBALS['plugin']['rewrite']['option']['rewrite_rule']['type'][$rewrite_rule['type']]) ?></span></td>
                                 <td><span class="badge <?php t(app_badge('enabled', $rewrite_rule['enabled'])) ?>"><?php h($GLOBALS['plugin']['rewrite']['option']['rewrite_rule']['enabled'][$rewrite_rule['enabled']]) ?></span></td>
                                 <td class="text-nowrap d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
-                                <td><a href="<?php t(MAIN_FILE) ?>/admin/rewrite_form?id=<?php t($rewrite_rule['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
+                                <td><a href="<?php t(MAIN_FILE) ?>/admin/rewrite_form?id=<?php t($rewrite_rule['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

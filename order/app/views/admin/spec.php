@@ -19,7 +19,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>商品に属する規格を管理します。「商品をカートに入れる際に選択できる」項目として使用します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/spec_form?entry_id=<?php t($_GET['entry_id']) ?>" class="btn btn-primary">規格登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/spec_form?entry_id=<?php t($_GET['entry_id']) ?>" class="btn btn-primary" role="button">規格登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -81,9 +81,9 @@
                                 <td class="d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
                                 <td>
                                     <?php if ($GLOBALS['plugin']['order']['setting']['use_stock']) : ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/admin/product?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($order_spec['id']) ?>" class="btn btn-primary btn-sm text-nowrap">製品</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/product?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($order_spec['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">製品</a>
                                     <?php endif ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/admin/spec_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;id=<?php t($order_spec['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/spec_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;id=<?php t($order_spec['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>
