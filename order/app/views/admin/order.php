@@ -27,7 +27,7 @@
                     <a href="<?php t(MAIN_FILE) ?>/admin/delivery" class="btn btn-primary" role="button">配送方法管理</a>
                 </p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success">
+                <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     注文を登録しました。
@@ -36,7 +36,7 @@
                     <?php endif ?>
                 </div>
                 <?php elseif (isset($_GET['warning'])) : ?>
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['warning'] === 'delete') : ?>
                     削除対象が選択されていません。

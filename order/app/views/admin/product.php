@@ -22,7 +22,7 @@
                 <p>規格に属する製品を管理します。「購入を完了した際に在庫数を減らす」設定として使用します。</p>
                 <p><a href="<?php t(MAIN_FILE) ?>/admin/product_form?entry_id=<?php t($_GET['entry_id']) ?>&amp;spec_id=<?php t($_GET['spec_id']) ?>" class="btn btn-primary" role="button">製品登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success">
+                <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     製品を登録しました。
@@ -33,7 +33,7 @@
                     <?php endif ?>
                 </div>
                 <?php elseif (isset($_GET['warning'])) : ?>
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['warning'] === 'delete') : ?>
                     削除対象が選択されていません。
@@ -42,7 +42,7 @@
                 <?php endif ?>
 
                 <?php if (!empty($_view['order_product_out_of_stocks'])) : ?>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     在庫数が0の製品があります。
                 </div>

@@ -25,7 +25,7 @@
                     <?php endif ?>
                 </p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success">
+                <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     商品を登録しました。
@@ -36,7 +36,7 @@
                     <?php endif ?>
                 </div>
                 <?php elseif (isset($_GET['warning'])) : ?>
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['warning'] === 'approve') : ?>
                     承認対象が選択されていません。
@@ -47,7 +47,7 @@
                 <?php endif ?>
 
                 <?php if (!empty($_view['entry_out_of_stocks'])) : ?>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     在庫数が0の規格を持つ、公開中の商品があります。
                 </div>

@@ -19,7 +19,7 @@
             <div class="card-header heading">注文</div>
             <div class="card-body">
                 <?php if ($_view['shipping_delivery_cost_total'] > $_view['order_record']['delivery_cost']) : ?>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     実際の送料が、注文時点の送料を超過しています。
                 </div>
@@ -52,7 +52,7 @@
                 }
                 ?>
                 <?php if ($has_over_shipped) : ?>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     発送数が注文数を超えている商品があります。
                 </div>
@@ -89,7 +89,7 @@
             <div class="card-body">
                 <p><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>" class="btn btn-primary" role="button">発送登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success">
+                <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     発送を登録しました。

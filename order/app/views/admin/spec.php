@@ -21,7 +21,7 @@
                 <p>商品に属する規格を管理します。「商品をカートに入れる際に選択できる」項目として使用します。</p>
                 <p><a href="<?php t(MAIN_FILE) ?>/admin/spec_form?entry_id=<?php t($_GET['entry_id']) ?>" class="btn btn-primary" role="button">規格登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success">
+                <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     規格を登録しました。
@@ -32,7 +32,7 @@
                     <?php endif ?>
                 </div>
                 <?php elseif (isset($_GET['warning'])) : ?>
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['warning'] === 'delete') : ?>
                     削除対象が選択されていません。
@@ -41,7 +41,7 @@
                 <?php endif ?>
 
                 <?php if (!empty($_view['order_spec_out_of_stocks'])) : ?>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     在庫数が0の、有効な規格があります。
                 </div>
