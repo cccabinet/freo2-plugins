@@ -99,7 +99,7 @@
                         <div class="card-body">
                             <?php if (empty($_GET['id'])) : ?>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">商品 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="必要な行だけ選択してください。">？</span></label>
+                                <label class="fw-bold">商品 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="必要な行だけ選択してください。">？</span></label>
                                 <div id="order_record_item_rows">
                                     <?php for ($i = 0; $i < 5; $i++) : ?>
                                     <div class="order_record_item_row d-flex align-items-center gap-2 mb-1">
@@ -215,7 +215,7 @@
                                 <textarea name="message" rows="5" cols="50" class="form-control"><?php t($_view['order_record']['message']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_record']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

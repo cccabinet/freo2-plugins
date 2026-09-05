@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">商品 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="今回発送する数を入力してください。">？</span></label>
+                                <label class="fw-bold">商品 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="今回発送する数を入力してください。">？</span></label>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -84,7 +84,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">送料 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="この発送で実際にかかった送料。">？</span></label>
+                                <label class="fw-bold">送料 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="この発送で実際にかかった送料。">？</span></label>
                                 <input type="text" name="delivery_cost" size="30" value="<?php t($_view['order_shipping']['delivery_cost']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
@@ -132,7 +132,7 @@
                                 <input type="text" name="telephone" size="30" value="<?php t($_view['order_shipping']['telephone']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_shipping']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

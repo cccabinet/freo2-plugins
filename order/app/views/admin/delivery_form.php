@@ -41,7 +41,7 @@
                                 <input type="text" name="name" size="30" value="<?php t($_view['order_delivery']['name']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">内容 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="配送方法の説明。">？</span></label>
+                                <label class="fw-bold">内容 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="配送方法の説明。">？</span></label>
                                 <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['order_delivery']['text']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
@@ -58,11 +58,11 @@
                                 <input type="text" name="cost" size="30" value="<?php t($_view['order_delivery']['cost']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">送料（上乗せ） <span class="badge text-light bg-secondary" data-toggle="tooltip" title="都道府県ごとの上乗せ送料をJSON形式で入力。">？</span></label>
+                                <label class="fw-bold">送料（上乗せ） <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="都道府県ごとの上乗せ送料をJSON形式で入力。">？</span></label>
                                 <textarea name="surcharge" rows="5" cols="50" class="form-control"><?php t($_view['order_delivery']['surcharge']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">値引きする注文金額の閾値 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="注文金額がこの値以上の場合に送料を値引き。">？</span></label>
+                                <label class="fw-bold">値引きする注文金額の閾値 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="注文金額がこの値以上の場合に送料を値引き。">？</span></label>
                                 <input type="text" name="threshold" size="30" value="<?php t($_view['order_delivery']['threshold']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
@@ -78,7 +78,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_delivery']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">

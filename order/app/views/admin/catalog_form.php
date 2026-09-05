@@ -101,7 +101,7 @@
                                 <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">コード <span class="badge text-light bg-secondary" data-toggle="tooltip" title="商品のURLに使用されます。">？</span> <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">コード <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="商品のURLに使用されます。">？</span> <span class="badge bg-danger">必須</span></label>
                                 <input type="text" name="code" size="30" value="<?php t($_view['entry']['code']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
@@ -159,7 +159,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">並び順 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="一覧では数値の大きいものから順に表示されます。">？</span></label>
+                                <label class="fw-bold">並び順 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="一覧では数値の大きいものから順に表示されます。">？</span></label>
                                 <input type="text" name="sort" size="30" value="<?php t($_view['entry']['sort']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mt-4">

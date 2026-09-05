@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">規格管理コード <span class="badge text-light bg-secondary" data-toggle="tooltip" title="規格の管理コード。">？</span> <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">規格管理コード <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="規格の管理コード。">？</span> <span class="badge bg-danger">必須</span></label>
                                 <input type="text" name="code" size="30" value="<?php t($_view['order_spec']['code']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
@@ -59,7 +59,7 @@
                                 <input type="text" name="selling_price" size="30" value="<?php t($_view['order_spec']['selling_price']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">通常価格 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="販売価格が特別な価格である場合、通常価格を併記できます。">？</span></label>
+                                <label class="fw-bold">通常価格 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="販売価格が特別な価格である場合、通常価格を併記できます。">？</span></label>
                                 <input type="text" name="regular_price" size="30" value="<?php t($_view['order_spec']['regular_price']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2 for-delivery">
@@ -76,7 +76,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">販売制限数 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="一度に購入できる最大数。">？</span></label>
+                                <label class="fw-bold">販売制限数 <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="一度に購入できる最大数。">？</span></label>
                                 <input type="text" name="sales_limit" size="30" value="<?php t($_view['order_spec']['sales_limit']) ?>" class="form-control" style="width: 200px;">
                             </div>
                             <div class="form-group mb-2">
@@ -88,7 +88,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">店舗用メモ <span class="badge text-light bg-secondary" data-bs-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['order_spec']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">
