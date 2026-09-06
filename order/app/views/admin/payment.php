@@ -19,7 +19,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>支払方法を管理します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/payment_form" class="btn btn-primary" role="button">支払方法登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/payment_form" class="btn btn-primary">支払方法登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -64,7 +64,7 @@
                             <td class="d-none d-md-table-cell"><?php h(truncate($order_payment['text'], 50)) ?></td>
                             <td class="text-end"><?php h(number_format($order_payment['fee'])) ?>円</td>
                             <td class="d-none d-md-table-cell"><span class="badge <?php t(app_badge('enabled', $order_payment['enabled'])) ?>"><?php h($GLOBALS['plugin']['order']['option']['order_payment']['enabled'][$order_payment['enabled']]) ?></span></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/admin/payment_form?id=<?php t($order_payment['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/admin/payment_form?id=<?php t($order_payment['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

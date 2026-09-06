@@ -19,7 +19,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>配送方法を管理します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/delivery_form" class="btn btn-primary" role="button">配送方法登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/delivery_form" class="btn btn-primary">配送方法登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -67,7 +67,7 @@
                             <td class="text-end"><?php h(number_format($order_delivery['cost'])) ?>円</td>
                             <td class="text-nowrap d-none d-md-table-cell"><?php h($GLOBALS['plugin']['order']['option']['order_delivery']['calculate'][$order_delivery['calculate']]) ?></td>
                             <td class="d-none d-md-table-cell"><span class="badge <?php t(app_badge('enabled', $order_delivery['enabled'])) ?>"><?php h($GLOBALS['plugin']['order']['option']['order_delivery']['enabled'][$order_delivery['enabled']]) ?></span></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/admin/delivery_form?id=<?php t($order_delivery['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/admin/delivery_form?id=<?php t($order_delivery['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

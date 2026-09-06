@@ -19,12 +19,12 @@
             <div class="card-body">
                 <p>注文を管理します。</p>
                 <p>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/order_form" class="btn btn-primary" role="button">注文登録</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/order_form" class="btn btn-primary">注文登録</a>
                     <?php if ($GLOBALS['plugin']['order']['setting']['use_direct']) : ?>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/order_form?provide=direct" class="btn btn-primary" role="button">注文登録（対面）</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/order_form?provide=direct" class="btn btn-primary">注文登録（対面）</a>
                     <?php endif ?>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/payment" class="btn btn-primary" role="button">支払方法管理</a>
-                    <a href="<?php t(MAIN_FILE) ?>/admin/delivery" class="btn btn-primary" role="button">配送方法管理</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/payment" class="btn btn-primary">支払方法管理</a>
+                    <a href="<?php t(MAIN_FILE) ?>/admin/delivery" class="btn btn-primary">配送方法管理</a>
                 </p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
@@ -106,9 +106,9 @@
                             <td class="text-nowrap"><span class="badge <?php t($status_badges[$order_record['status']] ?? 'text-bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_record']['status'][$order_record['status']] ?? $order_record['status']) ?></span></td>
                             <td>
                                 <?php if ($GLOBALS['plugin']['order']['setting']['use_shipping'] && $order_record['provide'] === 'delivery') : ?>
-                                <a href="<?php t(MAIN_FILE) ?>/admin/shipping?record_id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">発送</a>
+                                <a href="<?php t(MAIN_FILE) ?>/admin/shipping?record_id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap">発送</a>
                                 <?php endif ?>
-                                <a href="<?php t(MAIN_FILE) ?>/admin/order_form?id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a>
+                                <a href="<?php t(MAIN_FILE) ?>/admin/order_form?id=<?php t($order_record['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
                             </td>
                         </tr>
                         <?php endforeach ?>

@@ -87,7 +87,7 @@
         <div class="card shadow-sm mb-3">
             <div class="card-header heading">発送履歴</div>
             <div class="card-body">
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>" class="btn btn-primary" role="button">発送登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>" class="btn btn-primary">発送登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -133,7 +133,7 @@
                             <td class="d-none d-md-table-cell"><?php h($_view['order_delivery_sets'][$order_shipping['delivery_id']]['name'] ?? '') ?></td>
                             <td class="text-end"><?php if ($order_shipping['delivery_cost'] !== null) : ?><?php h(number_format($order_shipping['delivery_cost'])) ?>円<?php endif ?></td>
                             <td class="text-nowrap"><span class="badge <?php t($shipping_status_badges[$order_shipping['status']] ?? 'text-bg-secondary') ?>"><?php h($GLOBALS['plugin']['order']['option']['order_shippings']['status'][$order_shipping['status']] ?? $order_shipping['status']) ?></span></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>&amp;id=<?php t($order_shipping['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/admin/shipping_form?record_id=<?php t($_GET['record_id']) ?>&amp;id=<?php t($order_shipping['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

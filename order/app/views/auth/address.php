@@ -28,7 +28,7 @@
                 </div>
                 <?php endif ?>
 
-                <p><a href="<?php t(MAIN_FILE) ?>/auth/address_form" class="btn btn-primary" role="button">住所登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/auth/address_form" class="btn btn-primary">住所登録</a></p>
 
                 <table class="table table-bordered">
                     <thead>
@@ -50,7 +50,7 @@
                         <tr>
                             <td><?php h($order_address['name_01'] . ' ' . $order_address['name_02']) ?></td>
                             <td class="d-none d-md-table-cell"><?php h(truncate($order_address['prefecture'] . $order_address['address_01'], 50)) ?></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/auth/address_form?id=<?php t($order_address['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/auth/address_form?id=<?php t($order_address['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

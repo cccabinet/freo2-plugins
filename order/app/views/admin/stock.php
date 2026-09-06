@@ -19,7 +19,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>在庫を管理します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/stock_form" class="btn btn-primary" role="button">在庫登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/stock_form" class="btn btn-primary">在庫登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -67,7 +67,7 @@
                             <td class="text-nowrap d-none d-md-table-cell"><span class="badge <?php t(app_badge('kind', $order_stock['kind'])) ?>"><?php h($GLOBALS['plugin']['order']['option']['order_stock']['kind'][$order_stock['kind']]) ?></span></td>
                             <td class="text-end"><?php if ($order_stock['cost_price'] !== null) : ?><?php h(number_format($order_stock['cost_price'])) ?>円<?php endif ?></td>
                             <td class="text-end"><?php h($order_stock['quantity']) ?></td>
-                            <td><a href="<?php t(MAIN_FILE) ?>/admin/stock_form?id=<?php t($order_stock['id']) ?>" class="btn btn-primary btn-sm text-nowrap" role="button">編集</a></td>
+                            <td><a href="<?php t(MAIN_FILE) ?>/admin/stock_form?id=<?php t($order_stock['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

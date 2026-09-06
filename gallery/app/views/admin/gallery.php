@@ -18,7 +18,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
                 <p>ギャラリーを管理します。</p>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/gallery_form" class="btn btn-primary" role="button">ギャラリー登録</a></p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/gallery_form" class="btn btn-primary">ギャラリー登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -97,7 +97,7 @@
                                     <?php endforeach ?>
                                 </td>
                                 <?php endif ?>
-                                <td><a href="<?php t(MAIN_FILE) ?>/admin/gallery_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap" role="button">編集</a></td>
+                                <td><a href="<?php t(MAIN_FILE) ?>/admin/gallery_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap">編集</a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>
