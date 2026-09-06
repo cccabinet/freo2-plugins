@@ -3,7 +3,7 @@
     <div id="plugin-catalog">
         <h2 class="h3 mt-4 mb-3"><?php h($GLOBALS['plugin']['order']['setting']['heading_cart']) ?></h2>
         <?php if (isset($_GET['ok'])) : ?>
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
             <?php if ($_GET['ok'] === 'add') : ?>
             カートに商品を追加しました。

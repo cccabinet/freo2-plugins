@@ -21,7 +21,7 @@
                 <p>在庫を管理します。</p>
                 <p><a href="<?php t(MAIN_FILE) ?>/admin/stock_form" class="btn btn-primary">在庫登録</a></p>
                 <?php if (isset($_GET['ok'])) : ?>
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-success">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['ok'] === 'post') : ?>
                     在庫を登録しました。
@@ -30,7 +30,7 @@
                     <?php endif ?>
                 </div>
                 <?php elseif (isset($_GET['warning'])) : ?>
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                     <?php if ($_GET['warning'] === 'delete') : ?>
                     削除対象が選択されていません。
