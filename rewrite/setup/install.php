@@ -15,7 +15,7 @@ $resource = db_query('
         memo     TEXT                                        COMMENT \'メモ\',
         sort     INT UNSIGNED        NOT NULL                COMMENT \'並び順\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'リライト ルール\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'リライト ルール\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
