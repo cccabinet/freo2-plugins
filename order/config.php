@@ -172,12 +172,6 @@ $GLOBALS['plugin']['order']['setting_define'] = [
         'type'        => 'text',
         'required'    => false,
     ],
-    'button_order_preview' => [
-        'name'        => 'ボタン 注文確認',
-        'explanation' => null,
-        'type'        => 'text',
-        'required'    => false,
-    ],
     'mail_order_subject' => [
         'name'        => 'メール件名 注文完了',
         'explanation' => null,
@@ -249,7 +243,7 @@ $GLOBALS['plugin']['order']['setting_default'] = [
 ];
 
 /* オプション項目 */
-$GLOBALS['plugin']['order']['option'] = app_config('APP_OPTION', [
+$GLOBALS['plugin']['order']['option'] = [
     'order_stock' => [
         // 種類
         'kind' => [
@@ -324,4 +318,4 @@ $GLOBALS['plugin']['order']['option'] = app_config('APP_OPTION', [
             999 => '未定',
         ],
     ],
-]);
+];
