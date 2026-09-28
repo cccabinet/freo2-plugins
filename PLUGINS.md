@@ -9,7 +9,7 @@
 
 > **開発中のバージョンです。** freo2 は現在アルファ版で、プラグインの機能や画面は今後変わることがあります。
 
-最小の実装例である `sample` プラグインは、freo2 本体に同梱されています。プラグインの作り方は、公式サイトの [プラグイン](https://freo.jp/freo2/plugin/) と、本体の開発ガイド(`DEVELOPMENT.md`)を参照してください。
+最小の実装例である `sample` プラグインは、freo2 本体に同梱されています。プラグインの作り方は、公式サイトの [プラグイン](https://freo.jp/freo2/plugin/) と、本体の開発ガイド([DEVELOPMENT.md](https://github.com/refirio/freo2/blob/main/DEVELOPMENT.md))を参照してください。
 
 **導入のしかた(配置・インストール・有効化)は [README.md](README.md) を参照してください。**
 
