@@ -433,6 +433,59 @@ function validate_order_records($queries, $options = [])
 }
 
 /**
+ * 注文記録の絞り込み条件を作成
+ *
+ * select_order_records() はテーブルに別名を付けないため、列は修飾せずに書く。
+ *
+ * @param array $queries
+ * @param array $options
+ *
+ * @return array
+ */
+function filter_order_records($queries, $options = [])
+{
+    $wheres = [];
+    $pagers = [];
+
+    // キーワードを取得（注文番号・お名前・カナ・メールアドレス）
+    if (isset($queries['keyword'])) {
+        if ($queries['keyword'] !== '') {
+            $conditions = [
+                'name_01 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'name_02 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'kana_01 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'kana_02 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'email LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+            ];
+            if (validator_numeric($queries['keyword'])) {
+                $conditions[] = 'id = ' . db_escape(intval($queries['keyword']));
+            }
+
+            $wheres[] = '(' . implode(' OR ', $conditions) . ')';
+            $pagers[] = 'keyword=' . rawurlencode($queries['keyword']);
+        }
+    }
+
+    // 状況を取得
+    $status = isset($queries['status']) ? $queries['status'] : '';
+    if ($status === 'all') {
+        // すべての状況を対象にする（条件を付けない）
+        $pagers[] = 'status=all';
+    } elseif ($status !== '') {
+        $wheres[] = 'status = ' . db_escape($status);
+        $pagers[] = 'status=' . rawurlencode($status);
+    } elseif (!empty($GLOBALS['plugin']['order']['order_record_status_hidden'])) {
+        // 状況を指定していないときは、対応の済んだものを対象にしない
+        $wheres[] = 'status NOT IN(' . implode(',', array_map('db_escape', $GLOBALS['plugin']['order']['order_record_status_hidden'])) . ')';
+    }
+
+    return [
+        'where' => implode(' AND ', $wheres),
+        'pager' => implode('&amp;', $pagers),
+    ];
+}
+
+/**
  * 注文記録の表示用データ作成
  *
  * @param array $data

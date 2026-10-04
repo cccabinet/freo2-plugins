@@ -603,6 +603,39 @@ test.scenario = [
 
         test.click(row.find('a:contains("編集")'), '注文一覧の編集リンクが見つかりません。');
     },
+    // 注文編集: 対象を確認して、状況を「対応完了」にする
+    function() {
+        var form = $('form.register');
+
+        test.assertValue('form.register input[name="email"]', scenarioOrderEmail, '編集対象の注文が違います。');
+        test.assertExists('form.register select[name="status"] option[value="returning"]', '状況に「返品対応中」の選択肢がありません。');
+        test.assertExists('form.register select[name="status"] option[value="cancelling"]', '状況に「キャンセル対応中」の選択肢がありません。');
+
+        form.find('select[name="status"]').val('completed');
+        test.click('form.register button[type="submit"]');
+    },
+    // 注文一覧: 対応完了にすると既定の一覧から消えることを確認して、すべての状況で絞り込む
+    function() {
+        test.assertText('div.alert-success', '注文を登録しました。', '注文を編集できていません。');
+        test.assert(textRow(scenarioOrderName).length === 0, '対応完了にした注文が、既定の一覧に残っています。');
+
+        test.assertExists('form select[name="status"] option[value="all"]', '絞り込みに「すべて」の選択肢がありません。');
+
+        $('form select[name="status"]').val('all');
+        test.click('form button:contains("絞り込み")', '「絞り込み」のボタンが見つかりません。');
+    },
+    // 注文一覧: すべての状況では残っていることを確認して、注文を編集する
+    function() {
+        var row = textRow(scenarioOrderName);
+
+        if (!test.assert(row.length === 1, '対応完了にした注文が、すべての状況の一覧にありません。')) {
+            return;
+        }
+
+        test.assert(row.find('span.badge').text().trim() === '対応完了', '注文の状況が「対応完了」になっていません。');
+
+        test.click(row.find('a:contains("編集")'), '注文一覧の編集リンクが見つかりません。');
+    },
     // 注文編集: 対象を確認して削除する
     function() {
         test.assertValue('form.register input[name="email"]', scenarioOrderEmail, '編集対象の注文が違います。');
