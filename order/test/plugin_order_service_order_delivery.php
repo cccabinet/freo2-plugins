@@ -199,6 +199,38 @@ $inserted_id = intval($order_deliveries[0]['id']);
     test_equals('delete order_delivery log model', $logs[0]['model'], 'order_deliveries');
 }
 
+// 送料の計算テスト
+{
+    // データ（注文ごとに500円、5000円以上で無料）
+    $test_order_delivery = [
+        'calculate'  => 'order',
+        'cost'       => 500,
+        'threshold'  => 5000,
+        'discounted' => 0,
+    ];
+
+    // 結果（注文ごとなら、商品の数に関係なく1回分）
+    test_equals('delivery cost (order)', service_order_delivery_cost($test_order_delivery, 3000, 3), 500);
+
+    // 結果（閾値ちょうどで値引き後の送料になり、1円下なら元の送料）
+    test_equals('delivery cost (threshold)', service_order_delivery_cost($test_order_delivery, 5000, 3), 0);
+    test_equals('delivery cost (below threshold)', service_order_delivery_cost($test_order_delivery, 4999, 3), 500);
+
+    // 結果（商品の数ごとなら、数を掛ける）
+    $test_order_delivery['calculate'] = 'product';
+
+    test_equals('delivery cost (product)', service_order_delivery_cost($test_order_delivery, 3000, 3), 1500);
+    test_equals('delivery cost (product threshold)', service_order_delivery_cost($test_order_delivery, 6000, 3), 0);
+
+    // 結果（閾値が無ければ値引きしない）
+    $test_order_delivery['threshold'] = null;
+
+    test_equals('delivery cost (no threshold)', service_order_delivery_cost($test_order_delivery, 100000, 3), 1500);
+
+    // 結果（配送しない注文は0円）
+    test_equals('delivery cost (no delivery)', service_order_delivery_cost(null, 3000, 3), 0);
+}
+
 // トランザクションを終了
 db_rollback();
 

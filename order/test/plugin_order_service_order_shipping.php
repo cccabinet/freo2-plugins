@@ -300,6 +300,76 @@ $inserted_id = intval($order_shippings[0]['id']);
     test_equals('delete order_shipping log model', $logs[0]['model'], 'order_shippings');
 }
 
+// 発送済み数の取得テスト
+{
+    // データ（2つめの注文明細と、状況の違う発送記録を3件）
+    model('insert_order_record_items', [
+        'values' => [
+            'record_id'     => $record_id,
+            'spec_id'       => 2,
+            'selling_price' => 800,
+            'quantity'      => 5,
+        ],
+    ]);
+    $order_record_items = model('select_order_record_items', [
+        'select'   => 'id',
+        'order_by' => 'id DESC',
+        'limit'    => 1,
+    ]);
+    $record_item_id2 = intval($order_record_items[0]['id']);
+
+    $shipping_ids = [];
+    foreach (['completed' => [1, 2], 'failed' => [2, 0], 'preparing' => [0, 3]] as $status => $quantities) {
+        model('insert_order_shippings', [
+            'values' => [
+                'record_id'     => $record_id,
+                'delivery_id'   => 1,
+                'delivery_cost' => 500,
+                'status'        => $status,
+            ],
+        ]);
+        $order_shippings = model('select_order_shippings', [
+            'select'   => 'id',
+            'order_by' => 'id DESC',
+            'limit'    => 1,
+        ]);
+        $shipping_ids[$status] = intval($order_shippings[0]['id']);
+
+        foreach ([$record_item_id, $record_item_id2] as $index => $item_id) {
+            if ($quantities[$index] > 0) {
+                model('insert_order_shipping_items', [
+                    'values' => [
+                        'shipping_id'    => $shipping_ids[$status],
+                        'record_item_id' => $item_id,
+                        'quantity'       => $quantities[$index],
+                    ],
+                ]);
+            }
+        }
+    }
+
+    // 取得
+    $shipped_quantities = service_order_shipping_shipped_quantities($record_id, [$record_item_id, $record_item_id2]);
+
+    // 結果（配送失敗の発送記録は数えないこと）
+    test_equals('shipped quantities', $shipped_quantities, [
+        $record_item_id  => 1,
+        $record_item_id2 => 5,
+    ]);
+
+    // 取得（編集中の発送記録を除く）
+    $shipped_quantities = service_order_shipping_shipped_quantities($record_id, [$record_item_id, $record_item_id2], $shipping_ids['preparing']);
+
+    // 結果（除いた発送記録の分が減ること）
+    test_equals('shipped quantities (exclude)', $shipped_quantities, [
+        $record_item_id  => 1,
+        $record_item_id2 => 2,
+    ]);
+
+    // 結果（注文明細が無ければ空）
+    test_equals('shipped quantities (no items)', service_order_shipping_shipped_quantities($record_id, []), []);
+}
+
 // トランザクションを終了
 db_rollback();
 
