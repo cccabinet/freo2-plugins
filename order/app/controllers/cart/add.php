@@ -12,6 +12,10 @@ if (empty($_SERVER['HTTP_REFERER']) || !preg_match('/^' . preg_quote($GLOBALS['c
     error('不正なアクセスです。');
 }
 
+// 入力値を数値に限定する
+$_POST['order_spec_id'] = isset($_POST['order_spec_id']) ? intval($_POST['order_spec_id']) : 0;
+$_POST['quantity']      = isset($_POST['quantity'])      ? intval($_POST['quantity'])      : 0;
+
 // 規格を確認
 if (empty($_POST['order_spec_id'])) {
     error('規格が指定されていません。');
