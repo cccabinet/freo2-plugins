@@ -210,7 +210,7 @@ $inserted_id = intval($order_specs[0]['id']);
             ],
         ],
     ], [
-        'associate' => true,
+        'product' => true,
     ]);
 
     // 結果
@@ -226,7 +226,7 @@ $inserted_id = intval($order_specs[0]['id']);
         'where' => 'spec_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_spec (associate)', count($order_products), 0);
+    test_equals('delete order_spec (order_products)', count($order_products), 0);
 
     // 結果（操作ログが記録されること）
     $logs = model('select_logs', [

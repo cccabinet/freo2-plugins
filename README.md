@@ -17,4 +17,4 @@
 
 [PLUGINS.md](PLUGINS.md) を参照してください。ギャラリー、商品・注文管理、マークダウンでの本文入力、URL のリライトなどがあります。
 
-なお、最小の実装例である `sample` プラグインは freo2 本体に同梱されています。プラグインの作り方は、公式サイトの [プラグイン](https://freo.jp/freo2/plugin/) と、本体の開発ガイド(`DEVELOPMENT.md`)を参照してください。
+なお、最小の実装例である `sample` プラグインは freo2 本体に同梱されています。プラグインの作り方は、公式サイトの [プラグイン](https://freo.jp/freo2/plugin/) と、本体の開発ガイド([DEVELOPMENT.md](https://github.com/refirio/freo2/blob/main/DEVELOPMENT.md))を参照してください。

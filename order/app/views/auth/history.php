@@ -19,8 +19,10 @@
                     'shipped'   => 'text-bg-success',
                     'provided'  => 'text-bg-success',
                     'completed' => 'text-bg-success',
-                    'returned'  => 'text-bg-danger',
-                    'cancelled' => 'text-bg-secondary',
+                    'cancelling' => 'text-bg-warning',
+                    'cancelled'  => 'text-bg-secondary',
+                    'returning'  => 'text-bg-warning',
+                    'returned'   => 'text-bg-danger',
                     'hold'      => 'text-bg-warning',
                 ];
                 ?>

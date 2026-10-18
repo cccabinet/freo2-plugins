@@ -661,6 +661,8 @@ $inserted_id = intval($order_shippings[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
+    ], [
+        'shipping_item' => false,
     ]);
 
     // 結果（取得対象からは外れること）
@@ -685,7 +687,7 @@ $inserted_id = intval($order_shippings[0]['id']);
     test_equals('delete order_shipping (record)', count($order_shippings), 1);
     test_not_equals('delete order_shipping (deleted)', $order_shippings[0]['deleted'], null);
 
-    // 結果（オプションを渡していないので、明細は残ること）
+    // 結果（明細を削除しないよう指定したので、明細は残ること）
     $order_shipping_items = model('select_order_shipping_items', [
         'where' => 'shipping_id = ' . $inserted_id,
     ]);
@@ -695,7 +697,7 @@ $inserted_id = intval($order_shippings[0]['id']);
 
 // 関連データの削除テスト
 {
-    // 削除
+    // 削除（オプションを渡さない）
     model('delete_order_shippings', [
         'where' => [
             'id = :id',
@@ -703,16 +705,14 @@ $inserted_id = intval($order_shippings[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
-    ], [
-        'associate' => true,
     ]);
 
-    // 結果（明細も削除されること）
+    // 結果（既定で明細も削除されること）
     $order_shipping_items = model('select_order_shipping_items', [
         'where' => 'shipping_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_shipping (associate)', count($order_shipping_items), 0);
+    test_equals('delete order_shipping (order_shipping_items)', count($order_shipping_items), 0);
 }
 
 // 物理削除テスト

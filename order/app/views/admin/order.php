@@ -44,18 +44,34 @@
                 </div>
                 <?php endif ?>
 
+                <form action="<?php t(MAIN_FILE) ?>/admin/order" method="get" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="keyword" size="30" value="<?php t($_GET['keyword']) ?>" placeholder="注文番号、お名前、カナ、メールアドレス" class="form-control" style="flex: 2 1 0;">
+                        <select name="status" class="form-select" style="flex: 1 1 0;">
+                            <option value="">未完了</option>
+                            <?php foreach ($GLOBALS['plugin']['order']['option']['order_record']['status'] as $key => $value) : ?>
+                            <option value="<?php t($key) ?>"<?php strval($key) == $_GET['status'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                            <?php endforeach ?>
+                            <option value="all"<?php $_GET['status'] === 'all' ? e(' selected="selected"') : '' ?>>すべて</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">絞り込み</button>
+                    </div>
+                </form>
+
                 <?php
                 $status_badges = [
-                    'order'     => 'text-bg-info',
-                    'pending'   => 'text-bg-warning',
-                    'paid'      => 'text-bg-warning',
-                    'shipping'  => 'text-bg-warning',
-                    'shipped'   => 'text-bg-success',
-                    'provided'  => 'text-bg-success',
-                    'completed' => 'text-bg-success',
-                    'returned'  => 'text-bg-danger',
-                    'cancelled' => 'text-bg-secondary',
-                    'hold'      => 'text-bg-warning',
+                    'order'      => 'text-bg-info',
+                    'pending'    => 'text-bg-warning',
+                    'paid'       => 'text-bg-warning',
+                    'shipping'   => 'text-bg-warning',
+                    'shipped'    => 'text-bg-success',
+                    'provided'   => 'text-bg-success',
+                    'completed'  => 'text-bg-success',
+                    'cancelling' => 'text-bg-warning',
+                    'cancelled'  => 'text-bg-secondary',
+                    'returning'  => 'text-bg-warning',
+                    'returned'   => 'text-bg-danger',
+                    'hold'       => 'text-bg-warning',
                 ];
                 ?>
                 <table class="table table-bordered">
@@ -116,11 +132,11 @@
                 </table>
                 <?php if ($_view['order_record_page'] > 1) : ?>
                     <ul class="pagination d-flex justify-content-end">
-                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/order?page=1" class="page-link">&laquo;</a></li>
+                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/order?<?php e($_view['order_filter'] ? $_view['order_filter'] . '&amp;' : '') ?>page=1" class="page-link">&laquo;</a></li>
                         <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['plugin']['order']['setting']['number_width_admin_order'] / 2)); $i <= min($_view['order_record_page'], $_GET['page'] + floor($GLOBALS['plugin']['order']['setting']['number_width_admin_order'] / 2)); $i++) : ?>
-                        <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/order?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
+                        <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/order?<?php e($_view['order_filter'] ? $_view['order_filter'] . '&amp;' : '') ?>page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                         <?php endfor ?>
-                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/order?page=<?php t($_view['order_record_page']) ?>" class="page-link">&raquo;</a></li>
+                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/order?<?php e($_view['order_filter'] ? $_view['order_filter'] . '&amp;' : '') ?>page=<?php t($_view['order_record_page']) ?>" class="page-link">&raquo;</a></li>
                     </ul>
                 <?php endif ?>
             </div>

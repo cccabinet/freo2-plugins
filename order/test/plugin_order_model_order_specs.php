@@ -985,7 +985,7 @@ $inserted_id = intval($order_specs[0]['id']);
     model('delete_order_specs', [
         'where' => 'code IN(\'testspec5\', \'testspec6\')',
     ], [
-        'associate' => true,
+        'product' => true,
     ]);
 
     // 結果（削除した規格のひも付けは消えること）
@@ -993,14 +993,27 @@ $inserted_id = intval($order_specs[0]['id']);
         'where' => 'spec_id IN(' . implode(',', $associate_ids) . ')',
     ]);
 
-    test_equals('delete order_spec (associate)', count($order_products), 0);
+    test_equals('delete order_spec (order_products)', count($order_products), 0);
 
     // 結果（無関係なひも付けは残ること）
     $order_products = model('select_order_products', [
         'where' => 'spec_id = ' . $unrelated_id,
     ]);
 
-    test_equals('delete order_spec (associate unrelated)', count($order_products), 1);
+    test_equals('delete order_spec (order_products unrelated)', count($order_products), 1);
+}
+
+// 関連データの削除（該当なし）テスト
+{
+    // 削除（条件に一致する規格が無い）
+    $resource = model('delete_order_specs', [
+        'where' => 'code = \'not_exist\'',
+    ], [
+        'product' => true,
+    ]);
+
+    // 結果（エラーにならないこと）
+    test_equals('delete order_spec (no target)', (bool)$resource, true);
 }
 
 // トランザクションを終了

@@ -474,6 +474,85 @@ $inserted_id = intval($order_records[0]['id']);
     test_equals('validate list order_record status', count($warnings), 1);
 }
 
+// 状況の選択肢（返品・キャンセル）テスト
+{
+    // データ（対応中と完了が分かれていること）
+    $statuses = $GLOBALS['plugin']['order']['option']['order_record']['status'];
+
+    // 結果（ラベル）
+    test_equals('option order_record status returning', $statuses['returning'], '返品対応中');
+    test_equals('option order_record status returned', $statuses['returned'], '返品完了');
+    test_equals('option order_record status cancelling', $statuses['cancelling'], 'キャンセル対応中');
+    test_equals('option order_record status cancelled', $statuses['cancelled'], 'キャンセル完了');
+
+    // 結果（検証を通ること）
+    foreach (['returning', 'returned', 'cancelling', 'cancelled'] as $status) {
+        $test_order_record = $data_order_record;
+        $test_order_record['status'] = $status;
+
+        $test_order_record = model('normalize_order_records', $test_order_record);
+        $warnings          = model('validate_order_records', $test_order_record);
+
+        test_equals('validate list order_record status (' . $status . ')', count($warnings), 0);
+    }
+}
+
+// 絞り込みテスト
+{
+    // 確認
+    $filter = model('filter_order_records', [
+        'keyword' => 'テスト',
+        'status'  => 'pending',
+    ]);
+
+    // 結果（キーワードはお名前・カナ・メールアドレスを OR で見ること）
+    test_contains('filter order_records keyword', $filter['where'], 'name_01 LIKE ' . db_escape('%テスト%'));
+    test_contains('filter order_records keyword or', $filter['where'], ' OR ');
+    test_contains('filter order_records keyword kana', $filter['where'], 'kana_01 LIKE ' . db_escape('%テスト%'));
+    test_contains('filter order_records keyword kana 02', $filter['where'], 'kana_02 LIKE ' . db_escape('%テスト%'));
+    test_contains('filter order_records keyword email', $filter['where'], 'email LIKE ' . db_escape('%テスト%'));
+
+    // 結果（数字でないキーワードは注文番号の条件を作らないこと）
+    test_not_contains('filter order_records keyword id', $filter['where'], 'id = ');
+
+    // 結果（状況と、ページャー用のクエリ文字列）
+    test_contains('filter order_records status', $filter['where'], 'status = ' . db_escape('pending'));
+    test_contains('filter order_records pager', $filter['pager'], 'status=pending');
+}
+
+// 絞り込み（注文番号）テスト
+{
+    // 確認
+    $filter = model('filter_order_records', [
+        'keyword' => '12',
+    ]);
+
+    // 結果（数字なら注文番号も対象にすること）
+    test_contains('filter order_records id', $filter['where'], 'id = ' . db_escape(12));
+}
+
+// 絞り込み（状況の指定なし）テスト
+{
+    // 確認（管理画面を開いた直後は status のキー自体が無い）
+    $filter = model('filter_order_records', []);
+
+    // 結果（対応の済んだものを条件で除くこと）
+    test_equals('filter order_records status (default)', $filter['where'], 'status NOT IN(' . db_escape('completed') . ',' . db_escape('returned') . ',' . db_escape('cancelled') . ')');
+    test_equals('filter order_records pager (default)', $filter['pager'], '');
+}
+
+// 絞り込み（すべての状況）テスト
+{
+    // 確認
+    $filter = model('filter_order_records', [
+        'status' => 'all',
+    ]);
+
+    // 結果（状況では絞り込まず、ページャーには引き継ぐこと）
+    test_equals('filter order_records status (all)', $filter['where'], '');
+    test_equals('filter order_records pager (all)', $filter['pager'], 'status=all');
+}
+
 // メールアドレスの書式テスト
 {
     // データ
@@ -1003,6 +1082,8 @@ $inserted_id = intval($order_records[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
+    ], [
+        'record_item' => false,
     ]);
 
     // 結果（取得対象からは外れること）
@@ -1027,7 +1108,7 @@ $inserted_id = intval($order_records[0]['id']);
     test_equals('delete order_record (record)', count($order_records), 1);
     test_not_equals('delete order_record (deleted)', $order_records[0]['deleted'], null);
 
-    // 結果（オプションを渡していないので、明細は残ること）
+    // 結果（明細を削除しないよう指定したので、明細は残ること）
     $order_record_items = model('select_order_record_items', [
         'where' => 'record_id = ' . $inserted_id,
     ]);
@@ -1037,7 +1118,7 @@ $inserted_id = intval($order_records[0]['id']);
 
 // 関連データの削除テスト
 {
-    // 削除
+    // 削除（オプションを渡さない）
     model('delete_order_records', [
         'where' => [
             'id = :id',
@@ -1045,16 +1126,14 @@ $inserted_id = intval($order_records[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
-    ], [
-        'associate' => true,
     ]);
 
-    // 結果（明細も削除されること）
+    // 結果（既定で明細も削除されること）
     $order_record_items = model('select_order_record_items', [
         'where' => 'record_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_record (associate)', count($order_record_items), 0);
+    test_equals('delete order_record (order_record_items)', count($order_record_items), 0);
 }
 
 // 物理削除テスト

@@ -97,7 +97,12 @@
                                     <?php endforeach ?>
                                 </td>
                                 <?php endif ?>
-                                <td><a href="<?php t(MAIN_FILE) ?>/admin/gallery_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap">編集</a></td>
+                                <td>
+                                    <?php if ($entry['public'] !== 'none') : ?>
+                                    <a href="<?php t(MAIN_FILE) ?>/gallery/detail/<?php t($entry['code']) ?>" target="_blank" class="btn btn-primary btn-sm text-nowrap d-none d-md-inline-block">表示</a>
+                                    <?php endif ?>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/gallery_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap">編集</a>
+                                </td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

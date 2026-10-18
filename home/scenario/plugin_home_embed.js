@@ -252,7 +252,7 @@ test.scenario = [
     },
     // 公開のエントリーの編集ページに移動
     function() {
-        test.click(codeRow(scenarioEntry.code).find('a'), '一覧の ' + scenarioEntry.code + ' の編集リンクが見つかりません。');
+        test.click(codeRow(scenarioEntry.code).find('a:contains("編集")'), '一覧の ' + scenarioEntry.code + ' の編集リンクが見つかりません。');
     },
     // 公開のエントリーを削除
     function() {
@@ -262,7 +262,7 @@ test.scenario = [
     function() {
         test.assertText('div.alert-success', 'エントリーを削除しました。', 'エントリー ' + scenarioEntry.code + ' を削除できていません。');
 
-        test.click(codeRow(scenarioHidden.code).find('a'), '一覧の ' + scenarioHidden.code + ' の編集リンクが見つかりません。');
+        test.click(codeRow(scenarioHidden.code).find('a:contains("編集")'), '一覧の ' + scenarioHidden.code + ' の編集リンクが見つかりません。');
     },
     // 非公開のエントリーを削除
     function() {
@@ -277,7 +277,7 @@ test.scenario = [
     },
     // ページの編集ページに移動
     function() {
-        test.click(codeRow(scenarioPage.code).find('a'), '一覧の ' + scenarioPage.code + ' の編集リンクが見つかりません。');
+        test.click(codeRow(scenarioPage.code).find('a:contains("編集")'), '一覧の ' + scenarioPage.code + ' の編集リンクが見つかりません。');
     },
     // ページを削除
     function() {
