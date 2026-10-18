@@ -241,7 +241,7 @@ $inserted_id = intval($order_records[0]['id']);
             ],
         ],
     ], [
-        'associate' => true,
+        'record_item' => true,
     ]);
 
     // 結果
@@ -257,7 +257,7 @@ $inserted_id = intval($order_records[0]['id']);
         'where' => 'record_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_record (associate)', count($order_record_items), 0);
+    test_equals('delete order_record (order_record_items)', count($order_record_items), 0);
 
     // 結果（操作ログが記録されること）
     $logs = model('select_logs', [

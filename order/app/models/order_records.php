@@ -132,8 +132,8 @@ function delete_order_records($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
-        'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
-        'associate'  => isset($options['associate'])  ? $options['associate']  : false,
+        'softdelete'  => isset($options['softdelete'])  ? $options['softdelete']  : true,
+        'record_item' => isset($options['record_item']) ? $options['record_item'] : true,
     ];
 
     // 削除するデータのIDを取得
@@ -149,7 +149,7 @@ function delete_order_records($queries, $options = [])
         $ids[] = intval($order_record['id']);
     }
 
-    if ($options['associate'] === true && !empty($ids)) {
+    if ($options['record_item'] === true && !empty($ids)) {
         // 関連するデータを削除
         $resource = model('delete_order_record_items', [
             'where' => 'record_id IN(' . implode(',', $ids) . ')',

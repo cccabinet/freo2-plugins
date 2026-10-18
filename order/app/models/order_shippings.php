@@ -132,8 +132,8 @@ function delete_order_shippings($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
-        'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
-        'associate'  => isset($options['associate'])  ? $options['associate']  : false,
+        'softdelete'    => isset($options['softdelete'])    ? $options['softdelete']    : true,
+        'shipping_item' => isset($options['shipping_item']) ? $options['shipping_item'] : true,
     ];
 
     // 削除するデータのIDを取得
@@ -149,7 +149,7 @@ function delete_order_shippings($queries, $options = [])
         $ids[] = intval($order_shipping['id']);
     }
 
-    if ($options['associate'] === true && !empty($ids)) {
+    if ($options['shipping_item'] === true && !empty($ids)) {
         // 関連するデータを削除
         $resource = model('delete_order_shipping_items', [
             'where' => 'shipping_id IN(' . implode(',', $ids) . ')',

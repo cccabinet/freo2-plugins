@@ -267,7 +267,7 @@ $inserted_id = intval($order_shippings[0]['id']);
             ],
         ],
     ], [
-        'associate' => true,
+        'shipping_item' => true,
     ]);
 
     // 結果
@@ -283,7 +283,7 @@ $inserted_id = intval($order_shippings[0]['id']);
         'where' => 'shipping_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_shipping (associate)', count($order_shipping_items), 0);
+    test_equals('delete order_shipping (order_shipping_items)', count($order_shipping_items), 0);
 
     // 結果（操作ログが記録されること）
     $logs = model('select_logs', [

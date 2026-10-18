@@ -140,7 +140,7 @@ function delete_order_specs($queries, $options = [])
     $queries = db_placeholder($queries);
     $options = [
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
-        'associate'  => isset($options['associate'])  ? $options['associate']  : false,
+        'product'    => isset($options['product'])    ? $options['product']    : true,
     ];
 
     // 削除するデータのIDを取得
@@ -156,7 +156,7 @@ function delete_order_specs($queries, $options = [])
         $ids[] = intval($order_spec['id']);
     }
 
-    if ($options['associate'] === true && !empty($ids)) {
+    if ($options['product'] === true && !empty($ids)) {
         // 関連するデータを削除
         $resource = model('delete_order_products', [
             'where' => 'spec_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',

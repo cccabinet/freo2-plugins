@@ -1082,6 +1082,8 @@ $inserted_id = intval($order_records[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
+    ], [
+        'record_item' => false,
     ]);
 
     // 結果（取得対象からは外れること）
@@ -1106,7 +1108,7 @@ $inserted_id = intval($order_records[0]['id']);
     test_equals('delete order_record (record)', count($order_records), 1);
     test_not_equals('delete order_record (deleted)', $order_records[0]['deleted'], null);
 
-    // 結果（オプションを渡していないので、明細は残ること）
+    // 結果（明細を削除しないよう指定したので、明細は残ること）
     $order_record_items = model('select_order_record_items', [
         'where' => 'record_id = ' . $inserted_id,
     ]);
@@ -1116,7 +1118,7 @@ $inserted_id = intval($order_records[0]['id']);
 
 // 関連データの削除テスト
 {
-    // 削除
+    // 削除（オプションを渡さない）
     model('delete_order_records', [
         'where' => [
             'id = :id',
@@ -1124,16 +1126,14 @@ $inserted_id = intval($order_records[0]['id']);
                 'id' => $inserted_id,
             ],
         ],
-    ], [
-        'associate' => true,
     ]);
 
-    // 結果（明細も削除されること）
+    // 結果（既定で明細も削除されること）
     $order_record_items = model('select_order_record_items', [
         'where' => 'record_id = ' . $inserted_id,
     ]);
 
-    test_equals('delete order_record (associate)', count($order_record_items), 0);
+    test_equals('delete order_record (order_record_items)', count($order_record_items), 0);
 }
 
 // 物理削除テスト
