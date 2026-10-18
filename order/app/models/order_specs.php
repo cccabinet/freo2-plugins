@@ -156,7 +156,7 @@ function delete_order_specs($queries, $options = [])
         $ids[] = intval($order_spec['id']);
     }
 
-    if ($options['associate'] === true) {
+    if ($options['associate'] === true && !empty($ids)) {
         // 関連するデータを削除
         $resource = model('delete_order_products', [
             'where' => 'spec_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
