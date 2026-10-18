@@ -17,11 +17,11 @@
             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
             <?php if (empty($_SESSION['auth']['user']['id'])) : ?>
             <div class="form-group mb-2">
-                <label>お名前 <span class="badge bg-danger">必須</span></label>
+                <label>お名前 <span class="badge bg-danger"><?php h($GLOBALS['string']['text_required']) ?></span></label>
                 <input type="text" name="name" value="<?php t($_view['contact']['name']) ?>" class="form-control">
             </div>
             <div class="form-group mb-2">
-                <label>メールアドレス <span class="badge bg-danger">必須</span></label>
+                <label>メールアドレス <span class="badge bg-danger"><?php h($GLOBALS['string']['text_required']) ?></span></label>
                 <input type="text" name="email" value="<?php t($_view['contact']['email']) ?>" class="form-control">
             </div>
             <?php else : ?>
@@ -37,22 +37,22 @@
                 <input type="text" name="company" value="<?php t($_view['contact']['company']) ?>" class="form-control">
             </div>
             <div class="form-group mb-2">
-                <label>電話番号 <span class="badge bg-danger">必須</span></label>
+                <label>電話番号 <span class="badge bg-danger"><?php h($GLOBALS['string']['text_required']) ?></span></label>
                 <input type="text" name="tel" value="<?php t($_view['contact']['tel']) ?>" class="form-control">
             </div>
             <div class="form-group mb-2">
-                <label>お問い合わせ件名 <span class="badge bg-danger">必須</span></label>
+                <label>お問い合わせ件名 <span class="badge bg-danger"><?php h($GLOBALS['string']['text_required']) ?></span></label>
                 <input type="text" name="subject" value="<?php t($_view['contact']['subject']) ?>" class="form-control">
             </div>
             <div class="form-group mb-2">
-                <label>お問い合わせ内容 <span class="badge bg-danger">必須</span></label>
+                <label>お問い合わせ内容 <span class="badge bg-danger"><?php h($GLOBALS['string']['text_required']) ?></span></label>
                 <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['contact']['message']) ?></textarea>
             </div>
             <div class="form-group mt-4">
                 <?php if ($GLOBALS['config']['recaptcha_enable'] == true) : ?>
                 <?php recaptcha_input($GLOBALS['config']['recaptcha_site_key']) ?>
                 <?php endif ?>
-                <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_contact_confirm']) ?></button>
+                <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_contact_confirm']) ?></button>
             </div>
         </form>
 

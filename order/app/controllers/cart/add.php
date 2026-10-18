@@ -1,5 +1,7 @@
 <?php
 
+import('app/services/entry.php');
+
 // ワンタイムトークン
 if (!token('check')) {
     error('不正な操作が検出されました。送信内容を確認して再度実行してください。');
@@ -10,12 +12,16 @@ if (empty($_SERVER['HTTP_REFERER']) || !preg_match('/^' . preg_quote($GLOBALS['c
     error('不正なアクセスです。');
 }
 
+// 入力値を数値に限定する
+$_POST['order_spec_id'] = isset($_POST['order_spec_id']) ? intval($_POST['order_spec_id']) : 0;
+$_POST['quantity']      = isset($_POST['quantity'])      ? intval($_POST['quantity'])      : 0;
+
 // 規格を確認
 if (empty($_POST['order_spec_id'])) {
     error('規格が指定されていません。');
 }
 $order_specs = model('select_order_specs', [
-    'select' => 'provide',
+    'select' => 'provide, entry_id',
     'where'  => [
         'id = :id AND enabled = 1',
         [
@@ -27,6 +33,22 @@ if (empty($order_specs)) {
     error('規格が見つかりません。');
 }
 $provide = $order_specs[0]['provide'];
+
+// 商品を確認（公開範囲・公開期間の外の商品と、パスワード認証の前の商品はカートに追加できない）
+$entries = service_entry_select_published('catalog', [
+    'where' => [
+        'entries.id = :id',
+        [
+            'id' => $order_specs[0]['entry_id'],
+        ],
+    ],
+]);
+if (empty($entries)) {
+    error('商品が見つかりません。');
+}
+if ($entries[0]['public'] === 'password' && empty($_SESSION['entry_passwords'][$entries[0]['id']])) {
+    error('パスワード認証をしてからカートに追加してください。');
+}
 
 // 対面販売は管理画面からのみ受注登録できる
 if ($provide === 'direct') {

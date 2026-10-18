@@ -172,12 +172,6 @@ $GLOBALS['plugin']['order']['setting_define'] = [
         'type'        => 'text',
         'required'    => false,
     ],
-    'button_order_preview' => [
-        'name'        => 'ボタン 注文確認',
-        'explanation' => null,
-        'type'        => 'text',
-        'required'    => false,
-    ],
     'mail_order_subject' => [
         'name'        => 'メール件名 注文完了',
         'explanation' => null,
@@ -248,8 +242,11 @@ $GLOBALS['plugin']['order']['setting_default'] = [
     'number_width_admin_order' => 5,
 ];
 
+/* 注文管理で、状況を指定していないときに表示しない状況（対応の済んだもの） */
+$GLOBALS['plugin']['order']['order_record_status_hidden'] = ['completed', 'returned', 'cancelled'];
+
 /* オプション項目 */
-$GLOBALS['plugin']['order']['option'] = app_config('APP_OPTION', [
+$GLOBALS['plugin']['order']['option'] = [
     'order_stock' => [
         // 種類
         'kind' => [
@@ -267,16 +264,18 @@ $GLOBALS['plugin']['order']['option'] = app_config('APP_OPTION', [
     'order_record' => [
         // 状況
         'status' => [
-            'order'     => '新規受付',
-            'pending'   => '入金待ち',
-            'paid'      => '入金確認済み',
-            'shipping'  => '発送対応中',
-            'shipped'   => '発送完了',
-            'provided'  => 'ダウンロード提供済み',
-            'completed' => '対応完了',
-            'returned'  => '返品・返金',
-            'cancelled' => 'キャンセル',
-            'hold'      => '保留',
+            'order'      => '新規受付',
+            'pending'    => '入金待ち',
+            'paid'       => '入金確認済み',
+            'shipping'   => '発送対応中',
+            'shipped'    => '発送完了',
+            'provided'   => 'ダウンロード提供済み',
+            'completed'  => '対応完了',
+            'cancelling' => 'キャンセル対応中',
+            'cancelled'  => 'キャンセル完了',
+            'returning'  => '返品対応中',
+            'returned'   => '返品完了',
+            'hold'       => '保留',
         ],
     ],
     'order_shippings' => [
@@ -324,4 +323,4 @@ $GLOBALS['plugin']['order']['option'] = app_config('APP_OPTION', [
             999 => '未定',
         ],
     ],
-]);
+];

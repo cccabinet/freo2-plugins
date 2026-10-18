@@ -12,16 +12,18 @@
             <div class="card-body">
                 <?php
                 $status_badges = [
-                    'order'     => 'text-dark bg-info',
-                    'pending'   => 'text-dark bg-warning',
-                    'paid'      => 'text-dark bg-warning',
-                    'shipping'  => 'text-dark bg-warning',
-                    'shipped'   => 'text-light bg-success',
-                    'provided'  => 'text-light bg-success',
-                    'completed' => 'text-light bg-success',
-                    'returned'  => 'text-light bg-danger',
-                    'cancelled' => 'text-light bg-secondary',
-                    'hold'      => 'text-dark bg-warning',
+                    'order'      => 'text-dark bg-info',
+                    'pending'    => 'text-dark bg-warning',
+                    'paid'       => 'text-dark bg-warning',
+                    'shipping'   => 'text-dark bg-warning',
+                    'shipped'    => 'text-light bg-success',
+                    'provided'   => 'text-light bg-success',
+                    'completed'  => 'text-light bg-success',
+                    'cancelling' => 'text-dark bg-warning',
+                    'cancelled'  => 'text-light bg-secondary',
+                    'returning'  => 'text-dark bg-warning',
+                    'returned'   => 'text-light bg-danger',
+                    'hold'       => 'text-dark bg-warning',
                 ];
                 ?>
                 <table class="table table-bordered">

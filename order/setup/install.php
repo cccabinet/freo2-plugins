@@ -40,7 +40,7 @@ $resource = db_query('
         cost_price INT UNSIGNED                         COMMENT \'原価\',
         memo       TEXT                                 COMMENT \'店舗用メモ\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 在庫\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 在庫\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -65,7 +65,7 @@ $resource = db_query('
         memo          TEXT                                        COMMENT \'店舗用メモ\',
         sort          INT UNSIGNED        NOT NULL                COMMENT \'並び順\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 規格\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 規格\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -83,7 +83,7 @@ $resource = db_query('
         memo     TEXT                                 COMMENT \'店舗用メモ\',
         sort     INT UNSIGNED NOT NULL                COMMENT \'並び順\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 製品\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 製品\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -101,7 +101,7 @@ $resource = db_query('
         fee      INT UNSIGNED        NOT NULL                COMMENT \'手数料\',
         memo     TEXT                                        COMMENT \'店舗用メモ\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 支払方法\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 支払方法\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -123,7 +123,7 @@ $resource = db_query('
         discounted INT UNSIGNED                                COMMENT \'値引き後の送料\',
         memo       TEXT                                        COMMENT \'店舗用メモ\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 配送方法\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 配送方法\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -146,7 +146,7 @@ $resource = db_query('
         address_02 TEXT                                 COMMENT \'住所 2\',
         telephone  VARCHAR(80)                          COMMENT \'電話番号\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 住所\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 住所\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -180,7 +180,7 @@ $resource = db_query('
         message       TEXT                                 COMMENT \'お問い合わせ内容\',
         memo          TEXT                                 COMMENT \'店舗用メモ\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 注文記録\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 注文記録\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -199,7 +199,7 @@ $resource = db_query('
         cost_price    INT UNSIGNED                         COMMENT \'原価\',
         quantity      INT UNSIGNED NOT NULL                COMMENT \'数\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 注文明細\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 注文明細\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -228,7 +228,7 @@ $resource = db_query('
         telephone     VARCHAR(80)                          COMMENT \'電話番号\',
         memo          TEXT                                 COMMENT \'店舗用メモ\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 発送記録\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 発送記録\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');
@@ -244,7 +244,7 @@ $resource = db_query('
         record_item_id INT UNSIGNED NOT NULL                COMMENT \'外部キー 注文明細\',
         quantity       INT UNSIGNED NOT NULL                COMMENT \'数\',
         PRIMARY KEY(id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT \'オーダー 発送明細\';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT \'オーダー 発送明細\';
 ');
 if (!$resource) {
     error('プラグイン用SQL [テーブルを作成] を実行できません。');

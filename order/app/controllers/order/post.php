@@ -1,6 +1,7 @@
 <?php
 
 import('plugins/order/app/services/order_record.php');
+import('plugins/order/app/services/order_delivery.php');
 import('app/services/mail.php');
 
 //ワンタイムトークン
@@ -65,18 +66,7 @@ foreach ($_SESSION['item'] as $item) {
 }
 
 // 送料を計算
-$delivery_cost = 0;
-if ($order_delivery !== null) {
-    if ($order_delivery['calculate'] === 'product') {
-        $delivery_cost = $order_delivery['cost'] * $quantity_total;
-    } else {
-        $delivery_cost = $order_delivery['cost'];
-    }
-    if ($order_delivery['threshold'] !== null && $subtotal >= $order_delivery['threshold']) {
-        // TODO: 都道府県ごとの上乗せ送料（surcharge）は未対応
-        $delivery_cost = $order_delivery['discounted'];
-    }
-}
+$delivery_cost = service_order_delivery_cost($order_delivery, $subtotal, $quantity_total);
 
 // トランザクションを開始
 db_transaction();
@@ -163,7 +153,7 @@ $provide = $_SESSION['post']['order_record']['provide'];
 // 投稿セッションを初期化
 unset($_SESSION['post']);
 unset($_SESSION['item']);
-unset($_SESSION['cart'][$provide]);
+$_SESSION['cart'][$provide] = []; // 処理対象のみカラにする。キーごと消すと、カートの追加・変更・削除が foreach で未定義のキーを読むため
 
 // リダイレクト
 redirect('/order/complete');

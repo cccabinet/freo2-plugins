@@ -1,6 +1,6 @@
 <?php
 
-import('libs/modules/recaptcha.php');
+import('app/services/recaptcha.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン
@@ -9,24 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // reCAPTCHA
-    if ($GLOBALS['config']['recaptcha_enable'] == true && empty($_SESSION['recaptcha'])) {
-        $result = recaptcha_verify($GLOBALS['config']['recaptcha_secret_key']);
-        if ($result) {
-            $_SESSION['recaptcha'] = true;
-        } else {
-            error('reCAPTCHAでの認証に失敗しました。');
-        }
+    if (!service_recaptcha_verify()) {
+        error('reCAPTCHAでの認証に失敗しました。');
     }
 
     // 入力データを整理
-    $post = array(
+    $post = [
         'contact' => model('normalize_contacts', [
             'name'    => isset($_POST['name'])    ? $_POST['name']    : '',
             'email'   => isset($_POST['email'])   ? $_POST['email']   : '',
             'subject' => isset($_POST['subject']) ? $_POST['subject'] : '',
             'message' => isset($_POST['message']) ? $_POST['message'] : '',
         ]),
-    );
+    ];
 
     // 会社名を整理
     $post['contact']['company'] = isset($_POST['company']) ? $_POST['company'] : '';
@@ -103,4 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $_view['contact'] = model('view_contacts', $_view['contact']);
 
 // タイトル
-$_view['title'] = $GLOBALS['string']['heading_contact_form'];
+$_view['title'] = $GLOBALS['string']['heading_contact'];

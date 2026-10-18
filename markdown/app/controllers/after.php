@@ -1,11 +1,11 @@
 <?php
 
 if ($_REQUEST['_mode'] === 'entry' && $_REQUEST['_work'] === 'detail') {
-    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code']) {
+    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code'] && $_view['entry']['text'] !== null) {
         $_view['entry']['text'] = plugin_markdown_convert($_view['entry']['text']);
     }
 } elseif ($_REQUEST['_mode'] === 'page') {
-    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code']) {
+    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code'] && $_view['entry']['text'] !== null) {
         $_view['entry']['text'] = plugin_markdown_convert($_view['entry']['text']);
     }
 } elseif ($_REQUEST['_mode'] === 'home' || $_REQUEST['_mode'] === 'entry') {
@@ -17,7 +17,7 @@ if ($_REQUEST['_mode'] === 'entry' && $_REQUEST['_work'] === 'detail') {
         }
     }
 } elseif ($_REQUEST['_mode'] === 'admin' && ($_REQUEST['_work'] === 'entry_form' || $_REQUEST['_work'] === 'page_form') && isset($_POST['view']) && $_POST['view'] === 'preview') {
-    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code']) {
+    if ($_view['entry']['text_type'] === $GLOBALS['plugin']['markdown']['code'] && $_view['entry']['text'] !== null) {
         $_view['entry']['text'] = plugin_markdown_convert($_view['entry']['text']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+import('plugins/order/app/services/order_shipping.php');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン
     if (!token('check')) {
@@ -154,20 +156,7 @@ if (!empty($order_record_items)) {
 }
 
 // 他の発送記録での発送済み数を取得（この発送記録自身と、配送失敗・返送になった発送記録は除く）
-$shipped_quantities = [];
-if (!empty($order_record_items)) {
-    $excluded_ids   = model('select_unsuccessful_order_shippings', 'record_id = ' . intval($_view['order_record']['id']));
-    $excluded_where = !empty($excluded_ids) ? ' AND shipping_id NOT IN(' . implode(',', $excluded_ids) . ')' : '';
-
-    $shipped_items = model('select_order_shipping_items', [
-        'select'   => 'record_item_id, SUM(quantity) AS quantity',
-        'where'    => 'record_item_id IN(' . implode(',', array_map('db_escape', array_column($order_record_items, 'id'))) . ') AND shipping_id != ' . intval($_view['order_shipping']['id'] ?: 0) . $excluded_where,
-        'group_by' => 'record_item_id',
-    ]);
-    foreach ($shipped_items as $shipped_item) {
-        $shipped_quantities[$shipped_item['record_item_id']] = $shipped_item['quantity'];
-    }
-}
+$shipped_quantities = service_order_shipping_shipped_quantities($_view['order_record']['id'], array_column($order_record_items, 'id'), $_view['order_shipping']['id']);
 
 // この画面で入力済みの数量を取得（バリデーションエラー時は入力値、編集時は登録済みの値）
 $input_quantities = [];

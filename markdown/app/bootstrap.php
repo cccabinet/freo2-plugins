@@ -16,7 +16,7 @@ function plugin_markdown_convert($text)
     $text = str_replace(["\r\n", "\r"], "\n", $text);
     $lines = explode("\n", $text);
 
-    // 脚注定義( [^id]: 内容 )・参照リンク定義( [label]: url "title" )を事前に抜き出しておく
+    // 脚注定義（ [^id]: 内容 ）・参照リンク定義（ [label]: url "title" ）を事前に抜き出しておく
     $footnoteDefs = [];
     $linkDefs = [];
     $filtered = [];
@@ -50,14 +50,14 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // 水平線 (---, ***, ___)
+        // 水平線（---, ***, ___）
         if (preg_match('/^(?:-{3,}|\*{3,}|_{3,})$/', $trimmed)) {
             $out[] = '<hr>';
             $i++;
             continue;
         }
 
-        // インデントによるコードブロック(半角スペース4つ以上 or タブ)
+        // インデントによるコードブロック（半角スペース4つ以上 or タブ）
         if (preg_match('/^(?: {4}|\t)/', $line)) {
             $buf = [];
             while ($i < $n && (trim($lines[$i]) === '' || preg_match('/^(?: {4}|\t)/', $lines[$i]))) {
@@ -71,7 +71,7 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // フェンスコードブロック(```、```言語、```言語:ファイル名)
+        // フェンスコードブロック（```、```言語、```言語:ファイル名）
         if (preg_match('/^```\s*(\S*)\s*$/', $trimmed, $fm)) {
             $spec = $fm[1];
             $buf = [];
@@ -87,7 +87,7 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // HTMLコメント <!-- ... --> (複数行可)
+        // HTMLコメント <!-- ... --> （複数行可）
         if (preg_match('/^<!--/', $trimmed)) {
             $buf = [$line];
             while ($i + 1 < $n && strpos(end($buf), '-->') === false) {
@@ -99,7 +99,7 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // ブロックHTML(<details>/<div>など、複数行の生HTMLブロック)
+        // ブロックHTML（<details>/<div>など、複数行の生HTMLブロック）
         if (preg_match('/^<(' . plugin_markdown_block_tag_pattern() . ')(?:[\s>]|$)/i', $trimmed, $tm)) {
             $tag = strtolower($tm[1]);
             $buf = [$line];
@@ -112,14 +112,14 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // 生HTML(1行完結のタグ。山括弧オートリンクは除く)
-        if (!plugin_markdown_is_autolink_bracket($trimmed) && preg_match('/^<[a-zA-Z][^>]*>$/', $trimmed)) {
+        // 生HTML（タグだけで構成された1行。<a><img></a> のように複数のタグが並ぶ行も含む。山括弧オートリンクは除く）
+        if (!plugin_markdown_is_autolink_bracket($trimmed) && plugin_markdown_is_html_line($trimmed)) {
             $out[] = $trimmed;
             $i++;
             continue;
         }
 
-        // 見出し(# 記法)
+        // 見出し（# 記法）
         if (preg_match('/^(#{1,6})\s*(.+)$/u', $line, $m)) {
             $level = strlen($m[1]);
             $out[] = "<h{$level}>" . plugin_markdown_inline(trim($m[2])) . "</h{$level}>";
@@ -127,7 +127,7 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // 引用(継続行は > を省略可)
+        // 引用（継続行は > を省略可）
         if (preg_match('/^>\s?(.*)$/', $line)) {
             $buf = [];
             while ($i < $n) {
@@ -159,21 +159,21 @@ function plugin_markdown_convert($text)
             continue;
         }
 
-        // 箇条書き(順不同、ネスト・チェックボックス対応)
+        // 箇条書き（順不同、ネスト・チェックボックス対応）
         if (preg_match('/^[*\-]\s+(.+)$/', $line)) {
             [$listHtml, $i] = plugin_markdown_parse_list($lines, $i, $n, 'ul');
             $out[] = $listHtml;
             continue;
         }
 
-        // 箇条書き(順序あり、ネスト対応。"1." "1)" の両方に対応)
+        // 箇条書き（順序あり、ネスト対応。"1." "1)" の両方に対応）
         if (preg_match('/^\d+[.)]\s+(.+)$/', $line)) {
             [$listHtml, $i] = plugin_markdown_parse_list($lines, $i, $n, 'ol');
             $out[] = $listHtml;
             continue;
         }
 
-        // 段落(途中に = / - のみの行があれば代替記法の見出しにする)
+        // 段落（途中に = / - のみの行があれば代替記法の見出しにする）
         $buf = [];
         while ($i < $n && trim($lines[$i]) !== '') {
             if ($buf && preg_match('/^(=+|-+)$/', trim($lines[$i]))) {
@@ -240,7 +240,7 @@ function plugin_markdown_is_block_start($lines, $i, $n)
     if (preg_match('/^<(' . plugin_markdown_block_tag_pattern() . ')(?:[\s>]|$)/i', $trimmed)) {
         return true;
     }
-    if (!plugin_markdown_is_autolink_bracket($trimmed) && preg_match('/^<[a-zA-Z][^>]*>$/', $trimmed)) {
+    if (!plugin_markdown_is_autolink_bracket($trimmed) && plugin_markdown_is_html_line($trimmed)) {
         return true;
     }
     if (preg_match('/^(#{1,6})\s*(.+)$/u', $line)) {
@@ -272,7 +272,20 @@ function plugin_markdown_block_tag_pattern()
 }
 
 /**
- * 行全体が山括弧オートリンク( <https://...> / <mailto:...> / <user@example.com> )かどうかを判定する。
+ * 行全体がHTMLタグだけで構成されているか（ <img ...> / <a ...><img ...></a> など、タグの間に文字を含まない）を判定する。
+ * 開始タグで始まる行だけを対象とする。タグ名の直後が空白・/・> のものだけをタグとみなすため、
+ * <https://...> や <user@example.com> などの山括弧オートリンクはタグとして扱わない。
+ *
+ * @param string $trimmed 前後の空白を除去した行
+ * @return bool タグだけで構成されていれば true
+ */
+function plugin_markdown_is_html_line($trimmed)
+{
+    return (bool) preg_match('/^<[a-zA-Z][a-zA-Z0-9\-]*(?:\s[^>]*)?\/?>(?:\s*<\/?[a-zA-Z][a-zA-Z0-9\-]*(?:\s[^>]*)?\/?>)*$/', $trimmed);
+}
+
+/**
+ * 行全体が山括弧オートリンク（ <https://...> / <mailto:...> / <user@example.com> ）かどうかを判定する。
  * 生HTMLタグの1行パススルー処理からこの形式を除外するために使用する。
  *
  * @param string $trimmed 前後の空白を除去した行
@@ -294,8 +307,8 @@ function plugin_markdown_is_autolink_bracket($trimmed)
  * 変換の開始時に 'reset' で $footnoteDefs をセットしてから使用すること。
  *
  * @param string $action 'reset'|'use'|'defs'|'used'
- * @param mixed $arg 'reset' のときは脚注定義の連想配列([id => 内容])、'use' のときは参照する脚注ID
- * @return mixed 'use' は採番された脚注番号(int)、'defs' は定義の連想配列、'used' は使用された脚注IDの配列、'reset' は null
+ * @param mixed $arg 'reset' のときは脚注定義の連想配列（[id => 内容]）、'use' のときは参照する脚注ID
+ * @return mixed 'use' は採番された脚注番号（int）、'defs' は定義の連想配列、'used' は使用された脚注IDの配列、'reset' は null
  */
 function plugin_markdown_footnotes($action, $arg = null)
 {
@@ -321,12 +334,12 @@ function plugin_markdown_footnotes($action, $arg = null)
 }
 
 /**
- * 参照リンク定義( [label]: url "title" )を静的変数で保持する簡易ストア。
+ * 参照リンク定義（ [label]: url "title" ）を静的変数で保持する簡易ストア。
  * 変換の開始時に 'reset' で定義の連想配列をセットしてから使用すること。
  *
  * @param string $action 'reset'|'get'
- * @param mixed $arg 'reset' のときは定義の連想配列([label => ['url'=>..,'title'=>..]])、'get' のときは参照するラベル
- * @return mixed 'get' は定義の連想配列(未定義なら null)、'reset' は null
+ * @param mixed $arg 'reset' のときは定義の連想配列（[label => ['url'=>..,'title'=>..]]）、'get' のときは参照するラベル
+ * @return mixed 'get' は定義の連想配列（未定義なら null）、'reset' は null
  */
 function plugin_markdown_linkrefs($action, $arg = null)
 {
@@ -343,10 +356,10 @@ function plugin_markdown_linkrefs($action, $arg = null)
 }
 
 /**
- * 指定行がテーブルの開始行(ヘッダー行+区切り行)かどうかを判定する。
+ * 指定行がテーブルの開始行（ヘッダー行+区切り行）かどうかを判定する。
  *
  * @param string[] $lines 行に分割したMarkdownテキスト
- * @param int $i 判定対象の行インデックス(ヘッダー行)
+ * @param int $i 判定対象の行インデックス（ヘッダー行）
  * @param int $n $lines の行数
  * @return bool テーブルの開始行であれば true
  */
@@ -362,7 +375,7 @@ function plugin_markdown_is_table_start($lines, $i, $n)
 }
 
 /**
- * 行がテーブルの区切り行( |:---|:---:|---:| など )かどうかを判定する。
+ * 行がテーブルの区切り行（ |:---|:---:|---:| など ）かどうかを判定する。
  *
  * @param string $line 判定対象の行
  * @return bool 区切り行であれば true
@@ -377,7 +390,7 @@ function plugin_markdown_is_table_delimiter($line)
 }
 
 /**
- * テーブルの1行( |セル1|セル2|... )をセルの配列に分解する。
+ * テーブルの1行（ |セル1|セル2|... ）をセルの配列に分解する。
  *
  * @param string $line テーブルの1行
  * @return string[] 前後の空白を除去したセルの配列
@@ -391,10 +404,10 @@ function plugin_markdown_table_cells($line)
 }
 
 /**
- * テーブル区切り行の1セル(例: :---, ---:, :---:)から寄せ方向を判定する。
+ * テーブル区切り行の1セル（例: :---, ---:, :---:）から寄せ方向を判定する。
  *
  * @param string $cell 区切り行の1セル
- * @return string 'left'|'center'|'right'|''(指定なし)
+ * @return string 'left'|'center'|'right'|''（指定なし）
  */
 function plugin_markdown_table_align($cell)
 {
@@ -417,8 +430,8 @@ function plugin_markdown_table_align($cell)
  * ヘッダー・寄せ方向・本体行から <table> のHTMLを組み立てる。
  *
  * @param string[] $header ヘッダー行のセル配列
- * @param string[] $aligns 列ごとの寄せ方向('left'|'center'|'right'|'')の配列
- * @param string[][] $rows 本体行(セル配列)の配列
+ * @param string[] $aligns 列ごとの寄せ方向（'left'|'center'|'right'|''）の配列
+ * @param string[][] $rows 本体行（セル配列）の配列
  * @return string <table>...</table> のHTML文字列
  */
 function plugin_markdown_table_html($header, $aligns, $rows)
@@ -444,7 +457,7 @@ function plugin_markdown_table_html($header, $aligns, $rows)
 }
 
 /**
- * 箇条書き(順不同/順序あり)を、ネストとチェックボックスに対応しつつHTML化する。
+ * 箇条書き（順不同/順序あり）を、ネストとチェックボックスに対応しつつHTML化する。
  * ネストしたリストが見つかった場合は自身を再帰呼び出しする。
  *
  * @param string[] $lines 行に分割したMarkdownテキスト
@@ -479,7 +492,7 @@ function plugin_markdown_parse_list($lines, $i, $n, $type)
 
         $itemHtml = $checkbox . plugin_markdown_inline($content);
 
-        // 子リスト(インデントが深い箇条書き)を確認
+        // 子リスト（インデントが深い箇条書き）を確認
         if ($i < $n && trim($lines[$i]) !== '') {
             preg_match('/^(\s*)/', $lines[$i], $im3);
             $childIndent = strlen($im3[1]);
@@ -497,9 +510,9 @@ function plugin_markdown_parse_list($lines, $i, $n, $type)
 }
 
 /**
- * フェンスコードブロックの中身をHTML化する(```言語:ファイル名 の指定に対応)。
+ * フェンスコードブロックの中身をHTML化する（```言語:ファイル名 の指定に対応）。
  *
- * @param string $spec フェンス開始行の言語指定部分(例: "ruby:hello.rb")
+ * @param string $spec フェンス開始行の言語指定部分（例: "ruby:hello.rb"）
  * @param string $content コードブロックの中身
  * @return string <pre><code>...</code></pre> のHTML文字列
  */
@@ -519,9 +532,9 @@ function plugin_markdown_code_block_html($spec, $content)
 }
 
 /**
- * 画像のサイズ指定( =200x200 / =200x / =x200 / =full )からstyle属性を組み立てる。
+ * 画像のサイズ指定（ =200x200 / =200x / =x200 / =full ）からstyle属性を組み立てる。
  *
- * @param string $spec サイズ指定文字列(例: "200x200", "200x", "x200", "full", "")
+ * @param string $spec サイズ指定文字列（例: "200x200", "200x", "x200", "full", ""）
  * @return string ' style="..."' の形式の文字列、指定なし・不正な場合は空文字
  */
 function plugin_markdown_image_style($spec)
@@ -548,7 +561,7 @@ function plugin_markdown_image_style($spec)
 }
 
 /**
- * <span style="..."> の値のうち、安全な指定(色・文字サイズのみ)だけを許可するホワイトリスト検証を行う。
+ * <span style="..."> の値のうち、安全な指定（色・文字サイズのみ）だけを許可するホワイトリスト検証を行う。
  *
  * @param string $style 検証対象のstyle属性値
  * @return string|null 正規化した安全なstyle値、許可されない指定の場合は null
@@ -566,15 +579,15 @@ function plugin_markdown_sanitize_style($style)
 }
 
 /**
- * 1行または複数行のMarkdownテキストに対して、インライン記法(強調・リンク・画像・インラインコード・脚注参照・自動リンクなど)をHTMLに変換する。
+ * 1行または複数行のMarkdownテキストに対して、インライン記法（強調・リンク・画像・インラインコード・脚注参照・自動リンクなど）をHTMLに変換する。
  * HTMLエスケープもこの関数内で行う。
  *
- * @param string $text 変換対象のテキスト(未エスケープの生Markdown)
+ * @param string $text 変換対象のテキスト（未エスケープの生Markdown）
  * @return string 変換後のHTML文字列
  */
 function plugin_markdown_inline($text)
 {
-    // 改行ルール: 行末が半角スペース2個以上の場合のみ強制改行(<br>)、それ以外の改行は半角スペース1個として連結する
+    // 改行ルール: 行末が半角スペース2個以上の場合のみ強制改行（<br>）、それ以外の改行は半角スペース1個として連結する
     $rawLines = explode("\n", $text);
     $lineCount = count($rawLines);
     $joined = [];
@@ -587,7 +600,7 @@ function plugin_markdown_inline($text)
     }
     $text = implode('', $joined);
 
-    // バックスラッシュエスケープ( \* \_ \( など )を退避
+    // バックスラッシュエスケープ（ \* \_ \( など ）を退避
     $escapes = [];
     $text = preg_replace_callback('/\\\\([\\\\`*_{}\[\]()#+\-.!~>])/', function ($m) use (&$escapes) {
         $key = "\x00ESC" . count($escapes) . "\x00";
@@ -600,7 +613,7 @@ function plugin_markdown_inline($text)
 
     $replacements = [];
 
-    // インラインコード(`code`)を退避
+    // インラインコード（`code`）を退避
     $text = preg_replace_callback('/`([^`]+?)`/', function ($m) use (&$replacements) {
         $key = "\x00CODE" . count($replacements) . "\x00";
         $replacements[$key] = '<code>' . $m[1] . '</code>';
@@ -625,7 +638,7 @@ function plugin_markdown_inline($text)
         return $key;
     }, $text);
 
-    // 参照リンク [text][label] (label省略時は [text] 自体をラベルとする)
+    // 参照リンク [text][label] （label省略時は [text] 自体をラベルとする）
     $text = preg_replace_callback('/\[([^\]]+)\]\[([^\]]*)\]/', function ($m) use (&$replacements) {
         $label = $m[2] !== '' ? $m[2] : $m[1];
         $def = plugin_markdown_linkrefs('get', $label);
@@ -639,7 +652,7 @@ function plugin_markdown_inline($text)
         return $key;
     }, $text);
 
-    // 参照リンク(ショートカット形式) [label] (定義が存在する場合のみ変換する)
+    // 参照リンク（ショートカット形式） [label] （定義が存在する場合のみ変換する）
     $text = preg_replace_callback('/\[([^\]]+)\]/', function ($m) use (&$replacements) {
         $def = plugin_markdown_linkrefs('get', $m[1]);
         if ($def === null) {
@@ -652,7 +665,7 @@ function plugin_markdown_inline($text)
         return $key;
     }, $text);
 
-    // リンク [text](url) / [text](url "title")(この時点でHTMLエスケープ済みのため " は &quot; になっている)
+    // リンク [text](url) / [text](url "title")（この時点でHTMLエスケープ済みのため " は &quot; になっている）
     $text = preg_replace_callback('/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;([^&]*)&quot;)?\)/', function ($m) use (&$replacements) {
         $titleAttr = !empty($m[3]) ? ' title="' . $m[3] . '"' : '';
         $key = "\x00LINK" . count($replacements) . "\x00";
@@ -692,7 +705,7 @@ function plugin_markdown_inline($text)
     $text = preg_replace('/\*([^*\n]+?)\*/u', '<em>$1</em>', $text);
     $text = preg_replace('/_([^_\n]+?)_/u', '<em>$1</em>', $text);
 
-    // 下線・ハイライト・文字色/サイズ・span(エスケープ後のタグをホワイトリストで復元)
+    // 下線・ハイライト・文字色/サイズ・span（エスケープ後のタグをホワイトリストで復元）
     $text = preg_replace('/&lt;u&gt;(.*?)&lt;\/u&gt;/su', '<u>$1</u>', $text);
     $text = preg_replace('/&lt;mark&gt;(.*?)&lt;\/mark&gt;/su', '<mark>$1</mark>', $text);
     $text = preg_replace('/&lt;span&gt;(.*?)&lt;\/span&gt;/su', '<span>$1</span>', $text);

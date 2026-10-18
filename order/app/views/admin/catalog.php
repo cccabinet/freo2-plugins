@@ -110,6 +110,9 @@
                                 </td>
                                 <?php endif ?>
                                 <td>
+                                    <?php if ($entry['public'] !== 'none') : ?>
+                                    <a href="<?php t(MAIN_FILE) ?>/catalog/detail/<?php t($entry['code']) ?>" target="_blank" class="btn btn-primary btn-sm text-nowrap d-none d-md-inline-block">表示</a>
+                                    <?php endif ?>
                                     <a href="<?php t(MAIN_FILE) ?>/admin/spec?entry_id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap">規格</a>
                                     <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
                                 </td>

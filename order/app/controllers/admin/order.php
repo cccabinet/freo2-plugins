@@ -1,5 +1,22 @@
 <?php
 
+// 絞り込み条件を作成
+$filters = model('filter_order_records', $_GET);
+if ($filters['where'] === '') {
+    $filters['where'] = null;
+}
+
+// 絞り込み条件を引き継ぎ
+$_view['order_filter'] = $filters['pager'];
+
+// 絞り込み条件を初期化
+if (!isset($_GET['keyword'])) {
+    $_GET['keyword'] = null;
+}
+if (!isset($_GET['status'])) {
+    $_GET['status'] = null;
+}
+
 // ページを取得
 if (isset($_GET['page'])) {
     $_GET['page'] = intval($_GET['page']);
@@ -9,6 +26,7 @@ if (isset($_GET['page'])) {
 
 // 注文記録を取得
 $_view['order_records'] = model('select_order_records', [
+    'where'    => $filters['where'],
     'order_by' => 'id DESC',
     'limit'    => [
         ':offset, :limit',
@@ -22,6 +40,7 @@ $_view['order_records'] = model('select_order_records', [
 // 総数を取得
 $order_record_count = model('select_order_records', [
     'select' => 'COUNT(*) AS count',
+    'where'  => $filters['where'],
 ]);
 $_view['order_record_count'] = $order_record_count[0]['count'];
 $_view['order_record_page']  = ceil($order_record_count[0]['count'] / $GLOBALS['plugin']['order']['setting']['number_limit_admin_order']);
