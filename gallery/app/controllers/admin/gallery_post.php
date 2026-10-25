@@ -114,8 +114,10 @@ db_commit();
 
 // 投稿セッションを初期化
 unset($_SESSION['post']);
-unset($_SESSION['file']);
 unset($_SESSION['update']);
+
+// 投稿ファイルを破棄
+service_entry_file_clear();
 
 // リダイレクト
 redirect('/admin/gallery?ok=post');
