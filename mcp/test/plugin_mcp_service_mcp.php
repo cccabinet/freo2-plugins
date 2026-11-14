@@ -1127,9 +1127,28 @@ db_insert([
     test_equals('get_site description', $site['description'], 'テストの概要');
     test_equals('get_site url', $site['url'], $GLOBALS['config']['http_url'] . '/');
     test_equals('get_site settings', array_keys($settings), $GLOBALS['plugin']['mcp']['site_settings']);
-    test_equals('get_site setting name', $settings['entry_use_approve']['name'], 'エントリーの承認');
-    test_equals('get_site setting value', $settings['page_text_type']['value'], 'html');
+    test_equals('get_site setting name', $settings['comment_use_approve']['name'], 'コメントの承認');
+    test_array_not_haskey('get_site no type setting', $settings, 'entry_use_approve');
     test_array_not_haskey('get_site no mail', $settings, 'mail_from');
+}
+
+// 型の一覧テスト（下書きを作れるかと、型の設定）
+{
+    // 確認
+    $output = service_mcp_tool_list_types([], $auth_read);
+    $types  = array_column($output['data']['types'], null, 'code');
+
+    // 結果（本体の型は、本体の設定から）
+    test_equals('list_types entry draft', $types['entry']['draft'], true);
+    test_equals('list_types entry setting', $types['entry']['setting'], [
+        'use_approve'   => false,
+        'use_pictures'  => true,
+        'use_thumbnail' => true,
+        'default_code'  => 'YmdHis',
+        'text_type'     => 'wysiwyg',
+    ]);
+    test_equals('list_types page approve', $types['page']['setting']['use_approve'], true);
+    test_equals('list_types page pictures', $types['page']['setting']['use_pictures'], false);
 }
 
 // 管理者だけのツールと、属性のテスト
@@ -1671,6 +1690,132 @@ db_insert([
 
     $GLOBALS['config']['storage_type'] = $config_backup['storage_type'];
     $GLOBALS['config']['file_target']  = $config_backup['file_target'];
+}
+
+// プラグインの型の下書きテスト（データの定義があれば作れる）
+{
+    // データ（テスト用の型。types は前提データのあるテーブルなので、この行だけを最後に消す）
+    db_insert([
+        'insert_into' => DATABASE_PREFIX . 'types',
+        'values'      => [
+            'created'  => localdate('Y-m-d H:i:s'),
+            'modified' => localdate('Y-m-d H:i:s'),
+            'code'     => 'mcptesttype',
+            'name'     => 'テストの型',
+            'sort'     => 99,
+        ],
+    ]);
+    $plugin_backup = isset($GLOBALS['plugin']) ? $GLOBALS['plugin'] : null;
+
+    // 確認（data を持たないプラグインの型は、読めるが下書きは作れない）
+    $GLOBALS['plugin']['mcptestplugin'] = [
+        'code' => 'mcptestplugin',
+    ];
+
+    $output = service_mcp_tool_list_types([], $auth_draft);
+    $types  = array_column($output['data']['types'], null, 'code');
+
+    test_equals('plugin type without data listed', $types['mcptesttype']['draft'], false);
+    test_array_not_haskey('plugin type without data setting', $types['mcptesttype'], 'setting');
+    test_equals('plugin type without data tools enum', in_array('mcptesttype', service_mcp_tools_draft()[0]['inputSchema']['properties']['type']['enum'], true), false);
+
+    $output = service_mcp_tool_create_draft([
+        'type'  => 'mcptesttype',
+        'title' => 'テストの型の下書き',
+        'code'  => 'mcp_type1',
+    ], $auth_draft);
+    test_contains('plugin type without data create', $output['error'], 'typeには');
+
+    // 確認（data を持つプラグインの型。設定はプラグインの設定から読む。form が無ければ edit_url は無し）
+    $GLOBALS['plugin']['mcptestplugin'] = [
+        'code'            => 'mcptestplugin',
+        'data'            => [
+            'mcptesttype' => [
+                'type'    => 'mcptesttype',
+                'name'    => 'テストの型',
+                'setting' => [
+                    'use_approve'  => 'use_approve',
+                    'default_code' => 'default_code',
+                    'text_type'    => 'text_type',
+                ],
+            ],
+        ],
+        'setting'         => [
+            'use_approve' => 1,
+            'text_type'   => 'html',
+        ],
+        'setting_default' => [
+            'default_code' => 'Ymd',
+        ],
+    ];
+
+    $output = service_mcp_tool_list_types([], $auth_draft);
+    $types  = array_column($output['data']['types'], null, 'code');
+
+    test_equals('plugin type with data draft', $types['mcptesttype']['draft'], true);
+    test_equals('plugin type with data setting', $types['mcptesttype']['setting'], [
+        'use_approve'   => true,
+        'use_pictures'  => false,
+        'use_thumbnail' => false,
+        'default_code'  => 'Ymd',
+        'text_type'     => 'html',
+    ]);
+    test_equals('plugin type with data tools enum', in_array('mcptesttype', service_mcp_tools_draft()[0]['inputSchema']['properties']['type']['enum'], true), true);
+
+    $output = service_mcp_tool_create_draft([
+        'type'  => 'mcptesttype',
+        'title' => 'テストの型の下書き',
+    ], $auth_draft);
+
+    // 結果
+    test_equals('plugin type create error', $output['error'], null);
+    test_equals('plugin type create approved', $output['data']['entry']['approved'], false);
+    test_equals('plugin type create public', $output['data']['entry']['public'], 'none');
+    test_equals('plugin type create edit_url', $output['data']['entry']['edit_url'], null);
+    test_regexp('plugin type create default code', $output['data']['entry']['code'], '^\d{8}$');
+
+    $plugin_type_id = $output['data']['entry']['id'];
+    $entries        = model('select_entries', [
+        'where' => 'id = ' . intval($plugin_type_id),
+    ]);
+    test_equals('plugin type create text_type', $entries[0]['text_type'], 'html');
+
+    // 結果（設定で使わない画像は断る）
+    $output = service_mcp_tool_update_draft([
+        'id'       => $plugin_type_id,
+        'modified' => $entries[0]['modified'],
+        'pictures' => [],
+    ], $auth_draft);
+    test_equals('plugin type pictures disabled', $output['error'], 'この型は画像を使わない設定です。');
+
+    // 結果（更新できる）
+    $output = service_mcp_tool_update_draft([
+        'id'       => $plugin_type_id,
+        'modified' => $entries[0]['modified'],
+        'title'    => 'テストの型の下書き（更新）',
+    ], $auth_draft);
+    test_equals('plugin type update', $output['error'], null);
+
+    // 結果（data を外すと、作った下書きも更新できない）
+    unset($GLOBALS['plugin']['mcptestplugin']);
+
+    $entries = model('select_entries', [
+        'where' => 'id = ' . intval($plugin_type_id),
+    ]);
+    $output  = service_mcp_tool_update_draft([
+        'id'       => $plugin_type_id,
+        'modified' => $entries[0]['modified'],
+        'title'    => 'テスト',
+    ], $auth_draft);
+    test_equals('plugin type update without data', $output['error'], 'この型のエントリーは更新できません。');
+
+    // 後始末
+    if ($plugin_backup === null) {
+        unset($GLOBALS['plugin']);
+    } else {
+        $GLOBALS['plugin'] = $plugin_backup;
+    }
+    db_query('DELETE FROM ' . DATABASE_PREFIX . 'types WHERE code = ' . db_escape('mcptesttype') . ';');
 }
 
 // 既存データ削除
