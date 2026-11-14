@@ -69,7 +69,7 @@
                                 <label class="fw-bold">状況 <span class="badge bg-danger">必須</span></label>
                                 <select name="status" class="form-select" style="width: 200px;">
                                     <option value=""></option>
-                                    <?php foreach ($GLOBALS['plugin']['order']['option']['order_shippings']['status'] as $key => $value) : ?>
+                                    <?php foreach ($GLOBALS['plugin']['order']['option']['order_shipping']['status'] as $key => $value) : ?>
                                     <option value="<?php t($key) ?>"<?php $key == $_view['order_shipping']['status'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                     <?php endforeach ?>
                                 </select>

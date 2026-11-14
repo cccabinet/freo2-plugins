@@ -301,7 +301,7 @@ $GLOBALS['plugin']['order']['option'] = [
             'hold'       => '保留',
         ],
     ],
-    'order_shippings' => [
+    'order_shipping' => [
         // 状況
         'status' => [
             'preparing' => '発送準備中',
