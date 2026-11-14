@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['post']['mcp_token'] = $post['mcp_token'];
 
             // フォワード
-            forward('plugins/mcp/app/controllers/admin/mcp_token_post.php');
+            forward('plugins/mcp/app/controllers/auth/mcp_token_post.php');
         } else {
             $_view['mcp_token'] = $post['mcp_token'];
 

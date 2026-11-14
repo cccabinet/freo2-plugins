@@ -11,7 +11,7 @@ foreach ($GLOBALS['menu_contents']['admin']['auth'] as $key => $value) {
     if ($key === 'modify') {
         $menu_contents['mcp_token'] = [
             'name'   => 'MCPトークン管理',
-            'link'   => '/admin/mcp_token',
+            'link'   => '/auth/mcp_token',
             'active' => '/^mcp_token(_|$)/',
             'icon'   => null,
             'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= $GLOBALS['plugin']['mcp']['power'],

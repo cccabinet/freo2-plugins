@@ -46,8 +46,8 @@ if (!empty($_POST['id'])) {
     db_commit();
 
     // リダイレクト
-    redirect('/admin/mcp_token?ok=delete');
+    redirect('/auth/mcp_token?ok=delete');
 } else {
     // リダイレクト
-    redirect('/admin/mcp_token?warning=delete');
+    redirect('/auth/mcp_token?warning=delete');
 }

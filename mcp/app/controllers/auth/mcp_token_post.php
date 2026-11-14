@@ -10,7 +10,7 @@ if (forward() === null) {
 // 投稿データを確認
 if (empty($_SESSION['post'])) {
     // リダイレクト
-    redirect('/admin/mcp_token_form');
+    redirect('/auth/mcp_token_form');
 }
 
 if (empty($_SESSION['post']['mcp_token']['id'])) {
@@ -76,4 +76,4 @@ unset($_SESSION['post']);
 unset($_SESSION['update']);
 
 // リダイレクト
-redirect('/admin/mcp_token?ok=' . $ok);
+redirect('/auth/mcp_token?ok=' . $ok);
