@@ -558,13 +558,33 @@ function service_mcp_tools($auth)
 }
 
 /**
+ * 下書きを作れる型
+ *
+ * データの定義（本体の app/config.php と、有効なプラグインの config.php の data）のうち、型を持つものから作る。
+ * data を持たないプラグインの型は、読めるが下書きは作れない
+ *
+ * @return array 型のコードがキー、データの定義が値
+ */
+function service_mcp_draft_types()
+{
+    $types = [];
+    foreach (app_data() as $code => $data) {
+        if (!empty($data['type'])) {
+            $types[$data['type']] = $data + ['code' => $code];
+        }
+    }
+
+    return $types;
+}
+
+/**
  * ツールの定義（下書き）
  *
  * @return array
  */
 function service_mcp_tools_draft()
 {
-    $draft_types = $GLOBALS['plugin']['mcp']['draft_types'];
+    $draft_types = array_keys(service_mcp_draft_types());
     $text_types  = array_keys($GLOBALS['config']['option']['entry']['text_type']);
     $comments    = array_keys($GLOBALS['config']['option']['entry']['comment']);
 
@@ -619,14 +639,14 @@ function service_mcp_tools_draft()
         ],
         'thumbnail'    => [
             'type'        => 'string',
-            'description' => 'サムネイルにするメディアのパス（list_mediaのdirectoryとnameをつないだもの。例: images/photo.jpg）。複製して使います。空文字で削除。get_siteの<型>_use_thumbnailが無効なら使えません。',
+            'description' => 'サムネイルにするメディアのパス（list_mediaのdirectoryとnameをつないだもの。例: images/photo.jpg）。複製して使います。空文字で削除。list_typesの型のsettingでuse_thumbnailがfalseなら使えません。',
         ],
         'pictures'     => [
             'type'        => 'array',
             'items'       => [
                 'type' => 'string',
             ],
-            'description' => '画像の配列。メディアのパスを指定すると複製して使い、今の画像の名前（get_entryのpictures）を指定するとその画像を残します。指定すると、この並びで置き換えます（含めなかった今の画像は削除）。get_siteの<型>_use_picturesが無効なら使えません。',
+            'description' => '画像の配列。メディアのパスを指定すると複製して使い、今の画像の名前（get_entryのpictures）を指定するとその画像を残します。指定すると、この並びで置き換えます（含めなかった今の画像は削除）。list_typesの型のsettingでuse_picturesがfalseなら使えません。',
         ],
         'fields'       => [
             'type'                 => 'object',
@@ -648,7 +668,7 @@ function service_mcp_tools_draft()
                     'type' => [
                         'type'        => 'string',
                         'enum'        => $draft_types,
-                        'description' => '型のコード。',
+                        'description' => '型のコード（list_typesでdraftがtrueの型）。',
                     ],
                 ] + $properties,
                 'required'             => ['type', 'title'],
@@ -701,7 +721,7 @@ function service_mcp_tools_read()
         [
             'name'        => 'list_types',
             'title'       => '型の一覧',
-            'description' => 'freo2の型（コンテンツの種類）の一覧を返します。エントリー（entry）・ページ（page）のほか、プラグインが追加した型もあります。search_entriesとget_entryのtypeには、ここで返すcodeを指定します。',
+            'description' => 'freo2の型（コンテンツの種類）の一覧を返します。エントリー（entry）・ページ（page）のほか、プラグインが追加した型もあります。search_entriesとget_entryのtypeには、ここで返すcodeを指定します。draftがtrueの型は下書きを作れ、settingに型の設定（承認・画像・サムネイルを使うか、コードと本文形式の初期値）があります。',
             'inputSchema' => [
                 'type'                 => 'object',
                 'additionalProperties' => false,
@@ -881,7 +901,7 @@ function service_mcp_tools_read()
         [
             'name'        => 'get_site',
             'title'       => 'サイトの情報',
-            'description' => 'サイトのタイトル・概要・URLと、記事を書くときに関係する設定（承認の有無、本文形式の初期値、画像・サムネイルを使うかなど）を返します。',
+            'description' => 'サイトのタイトル・概要・URLと、サイト全体の設定の一部（トップページに表示するページ、ページのURLの省略、コメントの承認）を返します。型ごとの設定はlist_typesで確かめます。',
             'inputSchema' => [
                 'type'                 => 'object',
                 'additionalProperties' => false,
@@ -1014,13 +1034,29 @@ function service_mcp_tool_list_types($arguments, $auth)
         'order_by' => 'sort, id',
     ]);
 
+    // 下書きを作れる型（データの定義のあるもの）は、型の設定も返す
+    $draft_types = service_mcp_draft_types();
+
     $results = [];
     foreach ($types as $type) {
-        $results[] = [
-            'code' => $type['code'],
-            'name' => $type['name'],
-            'memo' => $type['memo'],
+        $result = [
+            'code'  => $type['code'],
+            'name'  => $type['name'],
+            'memo'  => $type['memo'],
+            'draft' => isset($draft_types[$type['code']]),
         ];
+        if ($result['draft']) {
+            $definition = $draft_types[$type['code']];
+
+            $result['setting'] = [
+                'use_approve'   => (bool)app_data_setting($definition, 'use_approve', false),
+                'use_pictures'  => (bool)app_data_setting($definition, 'use_pictures', false),
+                'use_thumbnail' => (bool)app_data_setting($definition, 'use_thumbnail', false),
+                'default_code'  => app_data_setting($definition, 'default_code'),
+                'text_type'     => app_data_setting($definition, 'text_type', 'wysiwyg'),
+            ];
+        }
+        $results[] = $result;
     }
 
     return service_mcp_output([
@@ -1820,8 +1856,13 @@ function service_mcp_draft_entry($type, $arguments, $entry)
         $data['public_end']   = '';
         $data['password']     = '';
         $data['text']         = '';
-        $data['text_type']    = $GLOBALS['setting'][$type['code'] . '_text_type'];
-        $data['code']         = $GLOBALS['setting'][$type['code'] . '_default_code'] ? localdate($GLOBALS['setting'][$type['code'] . '_default_code']) : '';
+
+        // 本文形式とコードの初期値（型の設定。データの定義に設定が無ければ、本体の初期値と、初期値なし）
+        $definition   = app_data_type($type['code']);
+        $default_code = app_data_setting($definition, 'default_code');
+
+        $data['text_type'] = app_data_setting($definition, 'text_type', $data['text_type']);
+        $data['code']      = $default_code ? localdate($default_code) : '';
 
         if ($values['code'] === null && $data['code'] === '') {
             return [null, 'codeを指定してください。'];
@@ -2015,13 +2056,16 @@ function service_mcp_draft_files($type, $arguments, $entry, $fields, $field_uplo
     }
     $picture_files = $current_pictures;
 
+    // 型の設定（データの定義に設定が無ければ、画像もサムネイルも使わない）
+    $definition = app_data_type($type['code']);
+
     // サムネイル
     $thumbnail = service_mcp_argument_text($arguments, 'thumbnail');
     if ($thumbnail === false) {
         return [null, null, 'thumbnailはメディアのパスで指定してください。'];
     }
     if ($thumbnail !== null) {
-        if (empty($GLOBALS['setting'][$type['code'] . '_use_thumbnail'])) {
+        if (!app_data_setting($definition, 'use_thumbnail', false)) {
             return [null, null, 'この型はサムネイルを使わない設定です。'];
         }
         if ($thumbnail === '') {
@@ -2041,7 +2085,7 @@ function service_mcp_draft_files($type, $arguments, $entry, $fields, $field_uplo
 
     // 画像
     if (array_key_exists('pictures', $arguments) && $arguments['pictures'] !== null) {
-        if (empty($GLOBALS['setting'][$type['code'] . '_use_pictures'])) {
+        if (!app_data_setting($definition, 'use_pictures', false)) {
             return [null, null, 'この型は画像を使わない設定です。'];
         }
         if (!is_array($arguments['pictures'])) {
@@ -2174,6 +2218,10 @@ function service_mcp_draft_output($id)
     ]);
     $entry = $entries[0];
 
+    // 編集画面（データの定義に form が無ければ返さない）
+    $definition = app_data_type($entry['type_code']);
+    $edit_url   = isset($definition['form']) ? $GLOBALS['config']['http_url'] . $definition['form'] . '?id=' . intval($entry['id']) : null;
+
     return service_mcp_output([
         'entry' => [
             'id'       => intval($entry['id']),
@@ -2183,7 +2231,7 @@ function service_mcp_draft_output($id)
             'public'   => $entry['public'],
             'approved' => (bool)$entry['approved'],
             'modified' => $entry['modified'],
-            'edit_url' => $GLOBALS['config']['http_url'] . '/admin/' . $entry['type_code'] . '_form?id=' . intval($entry['id']),
+            'edit_url' => $edit_url,
         ],
     ]);
 }
@@ -2198,9 +2246,10 @@ function service_mcp_draft_output($id)
  */
 function service_mcp_tool_create_draft($arguments, $auth)
 {
-    $type = service_mcp_argument_string($arguments, 'type');
-    if (!in_array($type, $GLOBALS['plugin']['mcp']['draft_types'], true)) {
-        return service_mcp_output(null, 'typeには' . implode('・', $GLOBALS['plugin']['mcp']['draft_types']) . 'のどれかを指定してください。');
+    $type        = service_mcp_argument_string($arguments, 'type');
+    $draft_types = service_mcp_draft_types();
+    if (!is_string($type) || !isset($draft_types[$type])) {
+        return service_mcp_output(null, 'typeには' . implode('・', array_keys($draft_types)) . 'のどれかを指定してください。');
     }
 
     $type_data = service_mcp_select_type($type);
@@ -2220,7 +2269,7 @@ function service_mcp_tool_create_draft($arguments, $auth)
     service_entry_insert([
         'values' => [
             'type_id'      => $data['type_id'],
-            'approved'     => $GLOBALS['setting'][$type . '_use_approve'] ? 0 : 1,
+            'approved'     => app_data_setting($draft_types[$type], 'use_approve', false) ? 0 : 1,
             'public'       => 'none',
             'public_begin' => $data['public_begin'],
             'public_end'   => $data['public_end'],
@@ -2293,7 +2342,8 @@ function service_mcp_tool_update_draft($arguments, $auth)
     }
     $entry = $entries[0];
 
-    if (!in_array($entry['type_code'], $GLOBALS['plugin']['mcp']['draft_types'], true)) {
+    $draft_types = service_mcp_draft_types();
+    if (!isset($draft_types[$entry['type_code']])) {
         return service_mcp_output(null, 'この型のエントリーは更新できません。');
     }
     if ($entry['public'] !== 'none') {

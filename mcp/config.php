@@ -20,7 +20,7 @@ $GLOBALS['plugin']['mcp']['detail'] = <<< EOM
 MCP（Model Context Protocol）に対応したAIのクライアントから、エントリーやページを検索・取得できるようにします。コメント・メディア・属性・サイトの情報も読めます（管理者のトークンでは、メニュー・ウィジェットも読めます）。
 受け口のURLは /mcp/ です。クライアントには、管理画面で発行したトークンをAuthorizationヘッダーで送らせます。
 トークンは、管理画面の右上のメニューに追加される「MCPトークン」で発行します。
-範囲を「読み取りと下書きの作成」にしたトークンでは、エントリーとページの下書きを作成・更新できます。下書きは非公開で作られ、公開は管理画面で行います。更新できるのは非公開のものだけです。
+範囲を「読み取りと下書きの作成」にしたトークンでは、エントリーとページの下書きを作成・更新できます。プラグインの型は、そのプラグインがデータの定義（config.php の data）を持っていれば下書きを作れます。下書きは非公開で作られ、公開は管理画面で行います。更新できるのは非公開のものだけです。
 下書きには、カテゴリー・属性・公開期間・コメントの受付も入れられます。画像・サムネイル・フィールドの画像やファイルは、メディアに登録したファイルを複製して付けます（AIから新しいファイルは受け取りません）。公開範囲は、管理画面で公開するときに決めます。
 EOM;
 
@@ -51,21 +51,8 @@ $GLOBALS['plugin']['mcp']['power'] = 2;
 /* エントリーの検索で一度に返す件数の上限 */
 $GLOBALS['plugin']['mcp']['search_limit'] = 100;
 
-/* 下書きを作れる型（プラグインの型は、独自のデータを持つことがあるので含めない） */
-$GLOBALS['plugin']['mcp']['draft_types'] = ['entry', 'page'];
-
-/* サイトの情報（get_site）で返す設定（記事を書くときに関係するものだけ。メールの設定などは含めない） */
+/* サイトの情報（get_site）で返す設定（サイト全体に関係するものだけ。型ごとの設定は list_types で返す。メールの設定などは含めない） */
 $GLOBALS['plugin']['mcp']['site_settings'] = [
-    'entry_use_approve',
-    'entry_use_pictures',
-    'entry_use_thumbnail',
-    'entry_default_code',
-    'entry_text_type',
-    'page_use_approve',
-    'page_use_pictures',
-    'page_use_thumbnail',
-    'page_default_code',
-    'page_text_type',
     'page_home_code',
     'page_url_omission',
     'comment_use_approve',
