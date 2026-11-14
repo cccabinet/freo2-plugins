@@ -2,7 +2,7 @@
 
 import('plugins/mcp/app/services/mcp_token.php');
 
-// MCP トークンを取得
+// MCPトークンを取得
 $_view['mcp_tokens'] = model('select_mcp_tokens', [
     'where'    => service_mcp_token_where(),
     'order_by' => 'id DESC',

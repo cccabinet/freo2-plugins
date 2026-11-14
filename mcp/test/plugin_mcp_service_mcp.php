@@ -115,7 +115,7 @@ $modern_meta    = [
     test_equals('headers lower case and hyphen', $headers['mcp-protocol-version'], '2025-11-25');
     test_array_not_haskey('headers without HTTP_', $headers, 'request-method');
 
-    // 確認（CGI で REDIRECT_ 付きになったとき）
+    // 確認（CGIで REDIRECT_ 付きになったとき）
     $headers = service_mcp_headers([
         'REDIRECT_HTTP_AUTHORIZATION' => 'Bearer def',
     ]);
@@ -133,7 +133,7 @@ $modern_meta    = [
     test_equals('headers authorization priority', $headers['authorization'], 'Bearer abc');
 }
 
-// Bearer トークンの取得テスト
+// Bearerトークンの取得テスト
 {
     // 結果
     test_equals('bearer', service_mcp_bearer(['authorization' => 'Bearer abc123']), 'abc123');
@@ -144,7 +144,7 @@ $modern_meta    = [
     test_equals('bearer space in token', service_mcp_bearer(['authorization' => 'Bearer abc def']), null);
 }
 
-// Origin の確認テスト
+// Originの確認テスト
 {
     // 結果
     test_equals('origin none', service_mcp_origin([], 'http://example.com/freo2'), true);
@@ -252,7 +252,7 @@ $modern_meta    = [
     test_not_equals('token hash not plain', $mcp_tokens[0]['token'], 'mcpauthvalid');
 }
 
-// JSON-RPC の形の確認テスト
+// JSON-RPCの形の確認テスト
 {
     // 確認
     $response = service_mcp_handle(['jsonrpc' => '1.0', 'id' => 1, 'method' => 'ping'], [], $auth_read);
@@ -347,7 +347,7 @@ $modern_meta    = [
     test_equals('legacy unsupported version status', $response['status'], 400);
     test_equals('legacy unsupported version code', $response['body']['error']['code'], -32600);
 
-    // 確認（無いメソッドは HTTP 200 の JSON-RPC のエラー）
+    // 確認（無いメソッドは HTTP 200のJSON-RPCのエラー）
     $response = service_mcp_handle([
         'jsonrpc' => '2.0',
         'id'      => 5,
@@ -496,7 +496,7 @@ $modern_meta    = [
     test_equals('modern tools/call result type', $response['body']['result']['resultType'], 'complete');
     test_equals('modern tools/call is not error', $response['body']['result']['isError'], false);
 
-    // 確認（clientCapabilities が無い）
+    // 確認（clientCapabilitiesが無い）
     $response = service_mcp_handle([
         'jsonrpc' => '2.0',
         'id'      => 7,
@@ -515,7 +515,7 @@ $modern_meta    = [
     test_equals('modern no capabilities status', $response['status'], 400);
     test_equals('modern no capabilities code', $response['body']['error']['code'], -32602);
 
-    // 確認（無いメソッドは 404）
+    // 確認（無いメソッドは404）
     $response = service_mcp_handle([
         'jsonrpc' => '2.0',
         'id'      => 8,
@@ -590,7 +590,7 @@ $modern_meta    = [
     // 結果
     test_equals('tools/call unknown tool', $response['body']['error']['code'], -32602);
 
-    // 確認（ツール自体の失敗は isError）
+    // 確認（ツール自体の失敗はisError）
     $response = service_mcp_dispatch(1, 'tools/call', [
         'name'      => 'get_entry',
         'arguments' => [],
@@ -1220,7 +1220,7 @@ db_insert([
     test_equals('get_entry no attributes', $output['data']['entry']['attributes'], []);
 }
 
-// 画像のフィールドの値（アップロードで登録される。MCP からは変えない）
+// 画像のフィールドの値（アップロードで登録される。MCPからは変えない）
 db_insert([
     'insert_into' => DATABASE_PREFIX . 'field_sets',
     'values'      => [

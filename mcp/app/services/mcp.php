@@ -54,7 +54,7 @@ function service_mcp_headers($server = null)
     if ($server === null) {
         $server = $_SERVER;
 
-        // mod_php では Authorization が $_SERVER に入らないことがあるので、取得できれば補う
+        // mod_php ではAuthorizationが $_SERVER に入らないことがあるので、取得できれば補う
         if (function_exists('getallheaders')) {
             foreach (getallheaders() as $name => $value) {
                 $headers[strtolower($name)] = $value;
@@ -68,7 +68,7 @@ function service_mcp_headers($server = null)
         }
     }
 
-    // CGI で動かしているときは、.htaccess で渡した Authorization が REDIRECT_ 付きになることがある
+    // CGIで動かしているときは、.htaccess で渡したAuthorizationが REDIRECT_ 付きになることがある
     if (!isset($headers['authorization']) && isset($server['REDIRECT_HTTP_AUTHORIZATION'])) {
         $headers['authorization'] = $server['REDIRECT_HTTP_AUTHORIZATION'];
     }
@@ -77,7 +77,7 @@ function service_mcp_headers($server = null)
 }
 
 /**
- * Authorization ヘッダーからトークンを取得
+ * Authorizationヘッダーからトークンを取得
  *
  * @param array $headers
  *
@@ -96,9 +96,9 @@ function service_mcp_bearer($headers)
 }
 
 /**
- * Origin ヘッダーの確認
+ * Originヘッダーの確認
  *
- * 付いていなければ通す（AI のクライアントは通常付けない）。付いていれば、サイト自身からのものだけを通す
+ * 付いていなければ通す（AIのクライアントは通常付けない）。付いていれば、サイト自身からのものだけを通す
  *
  * @param array  $headers
  * @param string $http_url
@@ -198,7 +198,7 @@ function service_mcp_authenticate($token)
 }
 
 /**
- * JSON-RPC の結果
+ * JSON-RPCの結果
  *
  * @param mixed $id
  * @param array $result
@@ -218,7 +218,7 @@ function service_mcp_result($id, $result)
 }
 
 /**
- * JSON-RPC のエラー
+ * JSON-RPCのエラー
  *
  * @param mixed      $id
  * @param int        $code
@@ -285,7 +285,7 @@ function service_mcp_server_info()
 }
 
 /**
- * サーバーの使い方の案内（AI に渡す）
+ * サーバーの使い方の案内（AIに渡す）
  *
  * @return string
  */
@@ -350,14 +350,14 @@ function service_mcp_guard($id)
  * @param array      $headers
  * @param array|null $auth
  *
- * @return array status（HTTP のステータス）と body（null なら本文なし）
+ * @return array status（HTTPのステータス）と body（null なら本文なし）
  */
 function service_mcp_handle($message, $headers, $auth)
 {
     $plugin    = $GLOBALS['plugin']['mcp'];
     $supported = array_merge($plugin['versions'], $plugin['legacy_versions']);
 
-    // JSON-RPC の形を確認（まとめて送る形式は受けない）
+    // JSON-RPCの形を確認（まとめて送る形式は受けない）
     if (!is_array($message) || !isset($message['jsonrpc']) || $message['jsonrpc'] !== '2.0' || !isset($message['method']) || !is_string($message['method'])) {
         return service_mcp_error(null, -32600, 'Invalid Request', null, 400);
     }

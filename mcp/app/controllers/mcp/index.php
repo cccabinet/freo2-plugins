@@ -2,17 +2,17 @@
 
 import('plugins/mcp/app/services/mcp.php');
 
-// エラーを HTML ではなく JSON で返す
+// エラーをHTMLではなくJSONで返す
 $_REQUEST['_type'] = 'json';
 
-// セッションは使わない（AI のクライアントはクッキーを返さないので、リクエストのたびにセッションが残らないようにする）
+// セッションは使わない（AIのクライアントはクッキーを返さないので、リクエストのたびにセッションが残らないようにする）
 if (session_status() === PHP_SESSION_ACTIVE) {
     session_destroy();
 }
 header_remove('Set-Cookie');
 $_SESSION = [];
 
-// POST だけを受ける（SSE の GET と、セッションを終える DELETE は使わない）
+// POSTだけを受ける（SSEのGETと、セッションを終えるDELETEは使わない）
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     service_mcp_respond(405, null, ['Allow: POST']);
 }
@@ -43,7 +43,7 @@ if ($message === null) {
     service_mcp_respond(400, service_mcp_error(null, -32700, 'Parse error')['body']);
 }
 
-// 応答の前に error() などで終了したときは、JSON-RPC のエラーにする
+// 応答の前に error() などで終了したときは、JSON-RPCのエラーにする
 service_mcp_guard(is_array($message) && isset($message['id']) ? $message['id'] : null);
 
 // 処理

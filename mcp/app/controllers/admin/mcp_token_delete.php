@@ -29,7 +29,7 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // MCP トークンを削除
+    // MCPトークンを削除
     $resource = service_mcp_token_delete([
         'where' => [
             'mcp_tokens.id = :id',

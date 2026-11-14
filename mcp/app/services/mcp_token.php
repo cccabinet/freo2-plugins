@@ -28,7 +28,7 @@ function service_mcp_token_create()
 }
 
 /**
- * MCP トークンの登録
+ * MCPトークンの登録
  *
  * @param array $queries
  * @param array $options
@@ -40,7 +40,7 @@ function service_mcp_token_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'mcp_tokens', 'insert');
 
-    // MCP トークンを登録
+    // MCPトークンを登録
     $resource = model('insert_mcp_tokens', $queries, $options);
     if (!$resource) {
         error('データを登録できません。');
@@ -50,7 +50,7 @@ function service_mcp_token_insert($queries, $options = [])
 }
 
 /**
- * MCP トークンの編集
+ * MCPトークンの編集
  *
  * @param array $queries
  * @param array $options
@@ -83,7 +83,7 @@ function service_mcp_token_update($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'mcp_tokens', 'update');
 
-    // MCP トークンを編集
+    // MCPトークンを編集
     $resource = model('update_mcp_tokens', $queries, $options);
     if (!$resource) {
         error('データを編集できません。');
@@ -93,7 +93,7 @@ function service_mcp_token_update($queries, $options = [])
 }
 
 /**
- * MCP トークンの削除
+ * MCPトークンの削除
  *
  * @param array $queries
  * @param array $options
@@ -105,7 +105,7 @@ function service_mcp_token_delete($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'mcp_tokens', 'delete');
 
-    // MCP トークンを削除
+    // MCPトークンを削除
     $resource = model('delete_mcp_tokens', $queries, $options);
     if (!$resource) {
         error('データを削除できません。');
@@ -115,7 +115,7 @@ function service_mcp_token_delete($queries, $options = [])
 }
 
 /**
- * 操作できる MCP トークンの条件
+ * 操作できるMCPトークンの条件
  *
  * 管理者はすべて、それ以外は自分のトークンだけ
  *
@@ -131,7 +131,7 @@ function service_mcp_token_where()
 }
 
 /**
- * 自分の MCP トークンの条件
+ * 自分のMCPトークンの条件
  *
  * @return string
  */
@@ -141,7 +141,7 @@ function service_mcp_token_where_own()
 }
 
 /**
- * 自分の MCP トークンか
+ * 自分のMCPトークンか
  *
  * ほかの人のトークン（管理者だけが開ける）は、名前だけを編集できる
  *

@@ -20,7 +20,7 @@ if (empty($_SESSION['post']['mcp_token']['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // MCP トークンを登録（発行したユーザーのトークンにする）
+    // MCPトークンを登録（発行したユーザーのトークンにする）
     $resource = service_mcp_token_insert([
         'values' => [
             'user_id' => $_SESSION['auth']['user']['id'],
@@ -45,7 +45,7 @@ if (empty($_SESSION['post']['mcp_token']['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // MCP トークンを編集（名前と有効期限だけ。ほかの人のトークンの有効期限は、入力画面で今の値にしてある）
+    // MCPトークンを編集（名前と有効期限だけ。ほかの人のトークンの有効期限は、入力画面で今の値にしてある）
     $resource = service_mcp_token_update([
         'set'   => [
             'name'   => $_SESSION['post']['mcp_token']['name'],

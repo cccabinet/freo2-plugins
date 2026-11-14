@@ -32,7 +32,7 @@ $GLOBALS['plugin']['order']['author'] = 'refirio';
 /* プラグインURL */
 $GLOBALS['plugin']['order']['link'] = 'https://refirio.org/';
 
-/* HTML出力で出力するページ（カートと注文は PHP が動かないと使えないので、HTML出力に対応しない） */
+/* HTML出力で出力するページ（カートと注文はPHPが動かないと使えないので、HTML出力に対応しない） */
 $GLOBALS['plugin']['order']['export'] = false;
 
 /* プラグイン設定項目 */

@@ -3,7 +3,7 @@
 import('libs/modules/validator.php');
 
 /**
- * MCP トークンの取得
+ * MCPトークンの取得
  *
  * @param array $queries
  * @param array $options
@@ -14,7 +14,7 @@ function select_mcp_tokens($queries, $options = [])
 {
     $queries = db_placeholder($queries);
 
-    // MCP トークンを取得
+    // MCPトークンを取得
     $queries['from'] = DATABASE_PREFIX . 'mcp_tokens';
 
     // 削除済みデータは取得しない
@@ -30,7 +30,7 @@ function select_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの登録
+ * MCPトークンの登録
  *
  * @param array $queries
  * @param array $options
@@ -71,7 +71,7 @@ function insert_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの編集
+ * MCPトークンの編集
  *
  * @param array $queries
  * @param array $options
@@ -105,7 +105,7 @@ function update_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの削除
+ * MCPトークンの削除
  *
  * @param array $queries
  * @param array $options
@@ -148,7 +148,7 @@ function delete_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの正規化
+ * MCPトークンの正規化
  *
  * @param array $queries
  * @param array $options
@@ -171,7 +171,7 @@ function normalize_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの検証
+ * MCPトークンの検証
  *
  * @param array $queries
  * @param array $options
@@ -221,7 +221,7 @@ function validate_mcp_tokens($queries, $options = [])
 }
 
 /**
- * MCP トークンの初期値
+ * MCPトークンの初期値
  *
  * @return array
  */

@@ -36,7 +36,7 @@ $GLOBALS['plugin']['mcp']['author'] = 'refirio';
 /* プラグインURL */
 $GLOBALS['plugin']['mcp']['link'] = 'https://refirio.org/';
 
-/* HTML出力で出力するページ（false なら HTML出力に対応しない） */
+/* HTML出力で出力するページ（false ならHTML出力に対応しない） */
 $GLOBALS['plugin']['mcp']['export'] = false;
 
 /* 対応するプロトコルの版（セッションを持たない版） */
