@@ -655,7 +655,7 @@ $inserted_id = $order_stocks[0]['id'];
 
 // 削除後の再登録テスト
 {
-    // データ（削除した在庫と同じコード。code は DB で UNIQUE なので、コードが退避されていないと INSERT が失敗する）
+    // データ（削除した在庫と同じコード。code はDBで UNIQUE なので、コードが退避されていないと INSERT が失敗する）
     $test_order_stock = $data_order_stock;
     $test_order_stock['code'] = 'teststock2';
     $test_order_stock['name'] = 'テスト在庫2（再登録）';

@@ -502,8 +502,8 @@ test.scenario = [
     function() {
         test.assertText('body', 'to: ' + scenarioEmail, '自動返信メールが記録されていません。（mail_log が無効になっている可能性があります）');
         test.assertText('body', scenarioSpecs.download.name, '自動返信メールに規格名がありません。');
-        // 商品 800円 + 手数料 100円（ダウンロードなので送料は0円）
-        test.assertText('body', '合計金額：900円', '自動返信メールの合計金額が 900円 ではありません。');
+        // 商品800円 + 手数料100円（ダウンロードなので送料は0円）
+        test.assertText('body', '合計金額：900円', '自動返信メールの合計金額が900円 ではありません。');
         test.assertNoText('body', '【お届け先】', 'ダウンロードなのに自動返信メールにお届け先があります。');
 
         test.visit('/auth/');
@@ -532,7 +532,7 @@ test.scenario = [
         }
 
         test.assert(row.text().indexOf('ダウンロード') !== -1, '注文の提供方法がダウンロードではありません。');
-        test.assert(row.text().indexOf('900円') !== -1, '注文の合計金額が 900円 ではありません。');
+        test.assert(row.text().indexOf('900円') !== -1, '注文の合計金額が900円 ではありません。');
 
         test.click(row.find('a:contains("編集")'), '注文一覧の編集リンクが見つかりません。');
     },
@@ -585,8 +585,8 @@ test.scenario = [
             return;
         }
 
-        // 商品 1,500円 × 2（手数料は管理画面の入力値。初期値は0円）
-        test.assert(row.text().indexOf('3,000円') !== -1, '対面販売の注文の合計金額が 3,000円 ではありません。');
+        // 商品1,500円 × 2（手数料は管理画面の入力値。初期値は0円）
+        test.assert(row.text().indexOf('3,000円') !== -1, '対面販売の注文の合計金額が3,000円 ではありません。');
 
         test.click(row.find('a:contains("編集")'), '注文一覧の編集リンクが見つかりません。');
     },

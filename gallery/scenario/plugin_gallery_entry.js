@@ -110,7 +110,7 @@ test.scenario = [
         var form = $('form.register');
 
         test.assert(form.find('input[name="code"]').length === 1, 'ギャラリーの登録フォームが表示されていません。');
-        test.assert(form.find('input[name="type_id"]').val() !== '', '型 gallery の ID がフォームに入っていません。');
+        test.assert(form.find('input[name="type_id"]').val() !== '', '型 gallery のIDがフォームに入っていません。');
 
         form.find('select[name="public"]').val('all').trigger('change');
         form.find('input[name="code"]').val(scenarioGallery.code);
@@ -130,7 +130,7 @@ test.scenario = [
 
         test.visit('/admin/');
     },
-    // ダッシュボードにギャラリー数のボックスが差し込まれていることを確認して、公開側の一覧に移動
+    // ダッシュボードにギャラリー数のボックスが表示されていることを確認して、公開側の一覧に移動（本体がデータの定義から出す）
     function() {
         test.wait(function() {
             return $('div.card-header:contains("ギャラリー数")').length === 1;

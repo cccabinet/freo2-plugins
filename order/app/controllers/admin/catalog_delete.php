@@ -16,15 +16,11 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
+    // TODO: このタイミングで規格と製品を削除するか（service_entry_deleteは共通関数なので）
+    // TODO: そもそも、受注が発生していたら削除できないようにするか（規格や製品の削除も同様）
+
     // エントリーを削除
-    $resource = service_entry_delete([
-        'where' => [
-            'id = :id',
-            [
-                'id' => $_POST['id'],
-            ],
-        ],
-    ]);
+    $resource = service_entry_delete_typed('catalog', $_POST['id']);
     if (!$resource) {
         error('データを削除できません。');
     }
@@ -38,10 +34,11 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
+    // TODO: このタイミングで規格と製品を削除するか（service_entry_deleteは共通関数なので）
+    // TODO: そもそも、受注が発生していたら削除できないようにするか（規格や製品の削除も同様）
+
     // エントリーを削除
-    $resource = service_entry_delete([
-        'where' => 'id IN(' . implode(',', array_map('db_escape', $_POST['list'])) . ')',
-    ]);
+    $resource = service_entry_delete_typed('catalog', $_POST['list']);
     if (!$resource) {
         error('データを削除できません。');
     }
@@ -49,8 +46,8 @@ if (!empty($_POST['id'])) {
     // トランザクションを終了
     db_commit();
 
-    // 一括処理セッションを初期化
-    unset($_SESSION['bulk']);
+    // 一括処理セッションを初期化（この型の選択だけ）
+    service_entry_bulk_clear('catalog');
 
     // リダイレクト
     redirect('/admin/catalog?ok=delete');

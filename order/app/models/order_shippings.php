@@ -259,7 +259,7 @@ function validate_order_shippings($queries, $options = [])
     if (isset($queries['status'])) {
         if (!validator_required($queries['status'])) {
             $messages['status'] = '状況が入力されていません。';
-        } elseif (!validator_list($queries['status'], $GLOBALS['plugin']['order']['option']['order_shippings']['status'])) {
+        } elseif (!validator_list($queries['status'], $GLOBALS['plugin']['order']['option']['order_shipping']['status'])) {
             $messages['status'] = '状況の値が不正です。';
         }
     }

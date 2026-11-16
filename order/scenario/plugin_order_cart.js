@@ -458,8 +458,8 @@ test.scenario = [
         }
 
         test.assert(row.text().indexOf('新規受付') !== -1, '注文の状況が新規受付ではありません。');
-        // 商品 1,000円 × 2 + 送料 500円 + 手数料 0円
-        test.assert(row.text().indexOf('2,500円') !== -1, '注文の合計金額が 2,500円 ではありません。');
+        // 商品1,000円 × 2 + 送料500円 + 手数料0円
+        test.assert(row.text().indexOf('2,500円') !== -1, '注文の合計金額が2,500円 ではありません。');
 
         test.click(row.find('a:contains("発送")'), '注文一覧の発送へのリンクが見つかりません。配送管理（use_shipping）が有効か確認してください。');
     },

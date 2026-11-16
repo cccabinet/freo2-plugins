@@ -141,7 +141,7 @@ test.scenario = [
     // 設定できたことを確認して、エントリー管理に移動
     function() {
         test.assertText('div.alert-success', '設定を登録しました。', '設定を登録できていません。');
-        // プラグインは表示用の値だけを書き換えるので、管理画面には指定がそのまま出ること（ここで埋め込んだ HTML が出ると、保存し直したときに指定が消える）
+        // プラグインは表示用の値だけを書き換えるので、管理画面には指定がそのまま出ること（ここで埋め込んだHTMLが出ると、保存し直したときに指定が消える）
         test.assertValue('form.register textarea[name="text_home_index"]', homeText, '設定画面の「トップページ」に、埋め込みの指定がそのまま表示されていません。');
 
         test.visit('/admin/entry');

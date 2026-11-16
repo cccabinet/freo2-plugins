@@ -873,7 +873,7 @@ $inserted_id = intval($order_specs[0]['id']);
 
 // 削除後の再登録テスト
 {
-    // データ（削除した規格と同じコード。code は DB で UNIQUE なので、コードが退避されていないと INSERT が失敗する）
+    // データ（削除した規格と同じコード。code はDBで UNIQUE なので、コードが退避されていないと INSERT が失敗する）
     $test_order_spec = $data_order_spec;
     $test_order_spec['name'] = 'テスト規格1（再登録）';
     $test_order_spec['sort'] = 3;
