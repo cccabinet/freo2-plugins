@@ -228,7 +228,7 @@ $inserted_id = intval($order_deliveries[0]['id']);
 
 // 送料（上乗せ）の未入力テスト
 {
-    // データ（都道府県ごとの上乗せ料金を JSON で持つ項目。任意）
+    // データ（都道府県ごとの上乗せ料金をJSONで持つ項目。任意）
     $test_order_delivery = $data_order_delivery;
     $test_order_delivery['surcharge'] = '';
 

@@ -402,8 +402,8 @@ test.scenario = [
             return;
         }
 
-        // 商品 2,000円 + 送料 500円 + 手数料 0円
-        test.assert(rows.text().indexOf('2,500円') !== -1, '注文履歴の合計金額が 2,500円 ではありません。');
+        // 商品2,000円 + 送料500円 + 手数料0円
+        test.assert(rows.text().indexOf('2,500円') !== -1, '注文履歴の合計金額が2,500円 ではありません。');
         test.assert(rows.text().indexOf(scenarioDeliveryName) !== -1, '注文履歴に配送方法が表示されていません。');
 
         test.click(rows.find('a:contains("表示")'), '注文履歴の表示リンクが見つかりません。');
@@ -414,7 +414,7 @@ test.scenario = [
         test.assertText('main', scenarioAddress.address_01, '注文詳細にお届け先の住所がありません。');
         test.assertText('main table', scenarioSpec.name, '注文詳細の明細に規格名がありません。');
         test.assertText('main table', scenarioCatalog.title, '注文詳細の明細に商品名がありません。');
-        test.assertText('main dd.fw-bold', '2,500円', '注文詳細の合計金額が 2,500円 ではありません。');
+        test.assertText('main dd.fw-bold', '2,500円', '注文詳細の合計金額が2,500円 ではありません。');
 
         test.visit('/auth/address');
     },

@@ -32,8 +32,28 @@ $GLOBALS['plugin']['order']['author'] = 'refirio';
 /* プラグインURL */
 $GLOBALS['plugin']['order']['link'] = 'https://refirio.org/';
 
-/* HTML出力で出力するページ（カートと注文は PHP が動かないと使えないので、HTML出力に対応しない） */
+/* HTML出力で出力するページ（カートと注文はPHPが動かないと使えないので、HTML出力に対応しない） */
 $GLOBALS['plugin']['order']['export'] = false;
+
+/* このプラグインが持つデータ（本体の app/config.php の data と同じ形） */
+$GLOBALS['plugin']['order']['data'] = [
+    'catalog' => [
+        'type'    => 'catalog',
+        'name'    => '商品',
+        'list'    => '/admin/catalog',
+        'form'    => '/admin/catalog_form',
+        'setting' => [
+            'use_approve'   => 'use_approve',
+            'use_pictures'  => 'use_pictures',
+            'use_thumbnail' => 'use_thumbnail',
+            'default_code'  => 'default_code',
+            'text_type'     => 'text_type',
+        ],
+    ],
+];
+
+/* 管理画面のダッシュボードに出すボックス（ボックスの配列を返す関数の名前。関数は app/bootstrap.php で定義する） */
+$GLOBALS['plugin']['order']['dashboard'] = 'plugin_order_dashboard';
 
 /* プラグイン設定項目 */
 $GLOBALS['plugin']['order']['setting_define'] = [
@@ -281,7 +301,7 @@ $GLOBALS['plugin']['order']['option'] = [
             'hold'       => '保留',
         ],
     ],
-    'order_shippings' => [
+    'order_shipping' => [
         // 状況
         'status' => [
             'preparing' => '発送準備中',

@@ -27,6 +27,7 @@ db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_shippings;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_shipping_items;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_records;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_record_items;');
+db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'logs;');
 
 // トランザクションを開始
 db_transaction();
@@ -378,6 +379,7 @@ db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_shippings;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_shipping_items;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_records;');
 db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'order_record_items;');
+db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'logs;');
 
 // コードカバレッジの記録を終了
 if (!isset($_GET['_test'])) {
