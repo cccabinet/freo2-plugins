@@ -78,3 +78,34 @@ foreach ($GLOBALS['menu_contents']['auth']['home'] as $key => $value) {
     $menu_contents[$key] = $value;
 }
 $GLOBALS['menu_contents']['auth']['home'] = $menu_contents;
+
+// メニューを編集
+//$GLOBALS['menu_contents']['auth']['home']['modify']['name'] .= '・' . $GLOBALS['plugin']['order']['setting_default']['heading_address'];
+
+/**
+ * ダッシュボードのボックス（config.php の dashboard で指定。商品数は data から本体が出す）
+ *
+ * @return array
+ */
+function plugin_order_dashboard()
+{
+    // 注文数と、未完了（注文管理で既定では表示しない、対応の済んだ状況を除いたもの）の数
+    $order_record_count = model('select_order_records', [
+        'select' => 'COUNT(id) AS count',
+    ]);
+    $order_record_incomplete_count = model('select_order_records', [
+        'select' => 'COUNT(id) AS count',
+        'where'  => 'status NOT IN(' . implode(',', array_map('db_escape', $GLOBALS['plugin']['order']['order_record_status_hidden'])) . ')',
+    ]);
+
+    return [
+        [
+            'group' => 'content',
+            'name'  => '注文',
+            'count' => $order_record_count[0]['count'],
+            'list'  => '/admin/order',
+            'label' => '未完了',
+            'other' => $order_record_incomplete_count[0]['count'],
+        ],
+    ];
+}

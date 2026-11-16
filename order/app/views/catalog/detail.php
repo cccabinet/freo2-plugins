@@ -15,7 +15,7 @@
         <?php if (!empty($_view['entry']['pictures'])) : ?>
         <div class="images">
             <div class="image my-3">
-                <a href="<?php t(MAIN_FILE) ?>/file/catalog/<?php t($_view['entry']['code']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['pictures'][0]) ?>" alt="" class="img-fluid rounded mx-auto d-block"></a>
+                <a href="<?php t(MAIN_FILE) ?>/file/catalog/<?php t($_view['entry']['code']) ?>"><img src="<?php t(app_file_url('entry', $_view['entry']['id'], $_view['entry']['pictures'][0])) ?>" alt="" class="img-fluid rounded mx-auto d-block"></a>
             </div>
         </div>
         <?php endif ?>
@@ -34,6 +34,7 @@
         $single_spec              = count($_view['order_specs']) === 1 ? $_view['order_specs'][0] : null;
         $single_spec_out_of_stock = $single_spec && !empty($_view['order_spec_out_of_stocks'][$single_spec['id']]);
         ?>
+        <?php if ($_view['entry']['public'] !== 'password' || !empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
         <form action="<?php t(MAIN_FILE) ?>/cart/add" method="post">
             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
             <input type="hidden" name="quantity" value="1">
@@ -54,6 +55,7 @@
                 <button type="submit" class="btn btn-primary px-4"<?php $single_spec_out_of_stock ? e(' disabled="disabled"') : '' ?>><?php h($GLOBALS['plugin']['order']['setting']['button_cart_add']) ?></button>
             </div>
         </form>
+        <?php endif ?>
     </div>
 
     <?php import('app/views/comment.php') ?>

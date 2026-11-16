@@ -25,7 +25,7 @@ if (!empty($_POST['id'])) {
             ],
         ],
     ], [
-        'associate' => true,
+        'shipping_item' => true,
     ]);
     if (!$resource) {
         error('データを削除できません。');

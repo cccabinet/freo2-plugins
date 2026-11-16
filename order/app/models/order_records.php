@@ -132,8 +132,8 @@ function delete_order_records($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
-        'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
-        'associate'  => isset($options['associate'])  ? $options['associate']  : false,
+        'softdelete'  => isset($options['softdelete'])  ? $options['softdelete']  : true,
+        'record_item' => isset($options['record_item']) ? $options['record_item'] : true,
     ];
 
     // 削除するデータのIDを取得
@@ -149,7 +149,7 @@ function delete_order_records($queries, $options = [])
         $ids[] = intval($order_record['id']);
     }
 
-    if ($options['associate'] === true && !empty($ids)) {
+    if ($options['record_item'] === true && !empty($ids)) {
         // 関連するデータを削除
         $resource = model('delete_order_record_items', [
             'where' => 'record_id IN(' . implode(',', $ids) . ')',
@@ -217,11 +217,6 @@ function normalize_order_records($queries, $options = [])
         $queries['discount'] = mb_convert_kana($queries['discount'], 'n', MAIN_INTERNAL_ENCODING);
     }
 
-    // 値引き額
-    if (isset($queries['discount'])) {
-        $queries['discount'] = mb_convert_kana($queries['discount'], 'n', MAIN_INTERNAL_ENCODING);
-    }
-
     // 配送日
     if (isset($queries['shipping_date'])) {
         $queries['shipping_date'] = mb_convert_kana($queries['shipping_date'], 'a', MAIN_INTERNAL_ENCODING);
@@ -279,9 +274,9 @@ function validate_order_records($queries, $options = [])
         }
     }
 
-    // 配送方法
-    if (isset($queries['delivery_id']) && ($queries['provide'] ?? null) === 'delivery') {
-        if (!validator_required($queries['delivery_id'])) {
+    // 配送方法（正規化で未選択が NULL になるので、キーの有無で確認し、NULL も未入力として扱う）
+    if (array_key_exists('delivery_id', $queries) && ($queries['provide'] ?? null) === 'delivery') {
+        if ($queries['delivery_id'] === null || !validator_required($queries['delivery_id'])) {
             $messages['delivery_id'] = '配送方法が入力されていません。';
         }
     }
@@ -435,6 +430,59 @@ function validate_order_records($queries, $options = [])
     }
 
     return $messages;
+}
+
+/**
+ * 注文記録の絞り込み条件を作成
+ *
+ * select_order_records() はテーブルに別名を付けないため、列は修飾せずに書く。
+ *
+ * @param array $queries
+ * @param array $options
+ *
+ * @return array
+ */
+function filter_order_records($queries, $options = [])
+{
+    $wheres = [];
+    $pagers = [];
+
+    // キーワードを取得（注文番号・お名前・カナ・メールアドレス）
+    if (isset($queries['keyword'])) {
+        if ($queries['keyword'] !== '') {
+            $conditions = [
+                'name_01 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'name_02 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'kana_01 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'kana_02 LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+                'email LIKE ' . db_escape('%' . $queries['keyword'] . '%'),
+            ];
+            if (validator_numeric($queries['keyword'])) {
+                $conditions[] = 'id = ' . db_escape(intval($queries['keyword']));
+            }
+
+            $wheres[] = '(' . implode(' OR ', $conditions) . ')';
+            $pagers[] = 'keyword=' . rawurlencode($queries['keyword']);
+        }
+    }
+
+    // 状況を取得
+    $status = isset($queries['status']) ? $queries['status'] : '';
+    if ($status === 'all') {
+        // すべての状況を対象にする（条件を付けない）
+        $pagers[] = 'status=all';
+    } elseif ($status !== '') {
+        $wheres[] = 'status = ' . db_escape($status);
+        $pagers[] = 'status=' . rawurlencode($status);
+    } elseif (!empty($GLOBALS['plugin']['order']['order_record_status_hidden'])) {
+        // 状況を指定していないときは、対応の済んだものを対象にしない
+        $wheres[] = 'status NOT IN(' . implode(',', array_map('db_escape', $GLOBALS['plugin']['order']['order_record_status_hidden'])) . ')';
+    }
+
+    return [
+        'where' => implode(' AND ', $wheres),
+        'pager' => implode('&amp;', $pagers),
+    ];
 }
 
 /**

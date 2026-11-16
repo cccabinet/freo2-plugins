@@ -93,7 +93,7 @@
                         <tbody>
                             <?php foreach ($_view['entries'] as $entry) : ?>
                             <tr<?php !empty($_view['entry_out_of_stocks'][$entry['id']]) ? e(' class="table-warning"') : '' ?>>
-                                <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entry'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
+                                <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entries']['catalog'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                 <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($entry['code'], 50)) ?></code></td>
                                 <td><?php h(truncate($entry['title'], 50)) ?></td>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
@@ -110,6 +110,9 @@
                                 </td>
                                 <?php endif ?>
                                 <td>
+                                    <?php if ($entry['public'] !== 'none') : ?>
+                                    <a href="<?php t(MAIN_FILE) ?>/catalog/detail/<?php t($entry['code']) ?>" target="_blank" class="btn btn-primary btn-sm text-nowrap d-none d-md-inline-block">表示</a>
+                                    <?php endif ?>
                                     <a href="<?php t(MAIN_FILE) ?>/admin/spec?entry_id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap">規格</a>
                                     <a href="<?php t(MAIN_FILE) ?>/admin/catalog_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap text-nowrap">編集</a>
                                 </td>

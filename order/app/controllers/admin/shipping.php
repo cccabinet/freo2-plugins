@@ -1,5 +1,7 @@
 <?php
 
+import('plugins/order/app/services/order_shipping.php');
+
 // 対象を確認
 if (empty($_GET['record_id'])) {
     error('不正なアクセスです。');
@@ -31,11 +33,9 @@ $_view['order_record_items'] = model('select_order_record_items', [
     'order_by' => 'id',
 ]);
 
-$_view['order_spec_sets']    = [];
-$_view['shipped_quantities'] = [];
-
+// 規格を取得
+$_view['order_spec_sets'] = [];
 if (!empty($_view['order_record_items'])) {
-    // 規格を取得
     $order_specs = model('select_order_specs', [
         'where' => 'order_specs.id IN(' . implode(',', array_map('db_escape', array_column($_view['order_record_items'], 'spec_id'))) . ')',
     ], [
@@ -44,21 +44,10 @@ if (!empty($_view['order_record_items'])) {
     foreach ($order_specs as $order_spec) {
         $_view['order_spec_sets'][$order_spec['id']] = $order_spec;
     }
-
-    // 配送失敗・返送になった発送記録は「発送済み」の集計から除外する
-    $excluded_ids   = model('select_unsuccessful_order_shippings', 'record_id = ' . intval($_GET['record_id']));
-    $excluded_where = !empty($excluded_ids) ? ' AND shipping_id NOT IN(' . implode(',', $excluded_ids) . ')' : '';
-
-    // 発送済み数を取得
-    $shipped_items = model('select_order_shipping_items', [
-        'select'   => 'record_item_id, SUM(quantity) AS quantity',
-        'where'    => 'record_item_id IN(' . implode(',', array_map('db_escape', array_column($_view['order_record_items'], 'id'))) . ')' . $excluded_where,
-        'group_by' => 'record_item_id',
-    ]);
-    foreach ($shipped_items as $shipped_item) {
-        $_view['shipped_quantities'][$shipped_item['record_item_id']] = $shipped_item['quantity'];
-    }
 }
+
+// 発送済み数を取得
+$_view['shipped_quantities'] = service_order_shipping_shipped_quantities($_GET['record_id'], array_column($_view['order_record_items'], 'id'));
 
 // 発送記録を取得
 $_view['order_shippings'] = model('select_order_shippings', [

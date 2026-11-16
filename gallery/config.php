@@ -32,6 +32,26 @@ $GLOBALS['plugin']['gallery']['author'] = 'refirio';
 /* プラグインURL */
 $GLOBALS['plugin']['gallery']['link'] = 'https://refirio.org/';
 
+/* HTML出力で出力するページ（URLの一覧を返す関数。app/bootstrap.php で定義する） */
+$GLOBALS['plugin']['gallery']['export'] = 'plugin_gallery_export_urls';
+
+/* このプラグインが持つデータ（本体の app/config.php の data と同じ形） */
+$GLOBALS['plugin']['gallery']['data'] = [
+    'gallery' => [
+        'type'    => 'gallery',
+        'name'    => 'ギャラリー',
+        'list'    => '/admin/gallery',
+        'form'    => '/admin/gallery_form',
+        'setting' => [
+            'use_approve'   => 'use_approve',
+            'use_pictures'  => 'use_pictures',
+            'use_thumbnail' => 'use_thumbnail',
+            'default_code'  => 'default_code',
+            'text_type'     => 'text_type',
+        ],
+    ],
+];
+
 /* プラグイン設定項目 */
 $GLOBALS['plugin']['gallery']['setting_define'] = [
     'use_approve' => [

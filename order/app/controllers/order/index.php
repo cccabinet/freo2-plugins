@@ -1,6 +1,6 @@
 <?php
 
-import('libs/modules/recaptcha.php');
+import('app/services/recaptcha.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン
@@ -9,17 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // reCAPTCHA
-    if ($GLOBALS['config']['recaptcha_enable'] == true && empty($_SESSION['recaptcha'])) {
-        $result = recaptcha_verify($GLOBALS['config']['recaptcha_secret_key']);
-        if ($result) {
-            $_SESSION['recaptcha'] = true;
-        } else {
-            error('reCAPTCHAでの認証に失敗しました。');
-        }
+    if (!service_recaptcha_verify()) {
+        error('reCAPTCHAでの認証に失敗しました。');
     }
 
     // 入力データを整理
-    $post = array(
+    $post = [
         'order_record' => model('normalize_order_records', [
             'provide'       => isset($_POST['provide'])       ? $_POST['provide']       : '',
             'payment_id'    => isset($_POST['payment_id'])    ? $_POST['payment_id']    : '',
@@ -43,10 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'text'          => isset($_POST['text'])          ? $_POST['text']          : '',
             'message'       => isset($_POST['message'])       ? $_POST['message']       : '',
         ]),
-    );
+    ];
 
     // 入力データを検証＆登録
     $warnings = model('validate_order_records', $post['order_record']);
+
+    // メールアドレス（注文完了メールを送るため、公開側の注文では必須。管理画面からの登録では任意）
+    if (!isset($warnings['email']) && !validator_required($post['order_record']['email'])) {
+        $warnings['email'] = 'メールアドレスが入力されていません。';
+    }
+
     if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
         if (empty($warnings)) {
             ok();
